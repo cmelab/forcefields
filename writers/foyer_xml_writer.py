@@ -6,7 +6,7 @@ def espaloma_to_foyer_xml():
     pass
 
 
-def parmed_to_foyer_xml(structure, ff, file_name, torsion_type):
+def parmed_to_foyer_xml(structure, ff, file_name, torsion_type=None):
     """Given a typed Parmed structure, and the Foyer forcefield applied,
     creates and saves a trucated Foyer xml file containing only the
     parameters used in the system.
@@ -31,14 +31,23 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type):
     parmed_to_foyer_xml(alkane_typed, opls, "alkane_opls.xml")
 
     """
-    if "OPLS" in ff.name:
+    if ff.name and "OPLS" in ff.name:
         if torsion_type and torsion_type != "rb":
             warn(
                     "The forcefield provied appears to be an OPLS type "
                     "which uses the Ryckaert-Bellemans form for dihedrals. "
                     "Setting the torsion type to RB."
             )
-        torsion_type == "rb"
+        torsion_type = "rb"
+    elif ff.name and "GAFF" in ff.name:
+        if torsion_type and torsion_type != "periodic":
+            warn(
+                    "The forcefield provied appears to be a GAFF type "
+                    "which uses the periodic form for dihedrals. "
+                    "Setting the torsion type to periodic."
+            )
+        torsion_type = "periodic"
+
     # Get needed information from the Parmed structure:
     atom_types = tuple(set(a.type for a in structure.atoms))
 
@@ -132,7 +141,7 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type):
                 )
                 f.write(line)
             f.write("\t</RBTorsionForce>\n")
-        else:
+        elif torsion_type == "periodic":
             f.write("\t<PeriodicTorsionForce>\n")
             for dihedral in dihedral_types:
                 params = ff.get_parameters("periodic_propers", dihedral)
@@ -140,20 +149,19 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type):
                 class2 = ff.atomTypeClasses[dihedral[1]]
                 class3 = ff.atomTypeClasses[dihedral[2]]
                 class4 = ff.atomTypeClasses[dihedral[3]]
-                line = write_rb_torsion(
+                periodicity = params["periodicity"]
+                k = params["k"]
+                line = write_periodic_dihedral(
                     class1=class1,
                     class2=class2,
                     class3=class3,
                     class4=class4,
-                    c0=params["c0"],
-                    c1=params["c1"],
-                    c2=params["c2"],
-                    c3=params["c3"],
-                    c4=params["c4"],
-                    c5=params["c5"],
+                    periodicity=params["periodicity"],
+                    k=params["k"],
+                    phase=params["phase"]
                 )
                 f.write(line)
-            f.write("\t</RBTorsionForce>\n")
+            f.write("\t</PeriodicTorsionForce>\n")
     
 
         # Write out non-bonded parameters 
