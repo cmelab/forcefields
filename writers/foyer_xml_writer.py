@@ -6,13 +6,39 @@ def espaloma_to_foyer_xml():
     pass
 
 
-def mbuild_to_foyer_xml(compound, bond_params, angle_params, dihedral_params, non_bonded_params):
-    pass
+def parmed_to_foyer_xml(structure, ff, file_name, torsion_type):
+    """Given a typed Parmed structure, and the Foyer forcefield applied,
+    creates and saves a trucated Foyer xml file containing only the
+    parameters used in the system.
 
+    Parameters:
+    -----------
+    structure : pmd.Structure; required
+        Parmed structure that has the types, bonds, angles, etc... populated
+    ff : Foyer.forcefield.Forcefield; required
+        A Foyer Forcefield object that was used when creating the typed Parmed structure
+    file_name : str; required
+        The file path and name to save the truncated xml file to
 
-def parmed_to_foyer_xml(structure, ff, file_name):
+    Example:
+    --------
+    import mbuild as mb
+    import foyer
+
+    alkane = mb.load("CCCCC", smiles=True)
+    opls = foyer.Forcefield(name="oplsaa")
+    alkane_typed = opls.apply(alkane)
+    parmed_to_foyer_xml(alkane_typed, opls, "alkane_opls.xml")
+
     """
-    """
+    if "OPLS" in ff.name:
+        if torsion_type and torsion_type != "rb":
+            warn(
+                    "The forcefield provied appears to be an OPLS type "
+                    "which uses the Ryckaert-Bellemans form for dihedrals. "
+                    "Setting the torsion type to RB."
+            )
+        torsion_type == "rb"
     # Get needed information from the Parmed structure:
     atom_types = tuple(set(a.type for a in structure.atoms))
 
@@ -27,8 +53,13 @@ def parmed_to_foyer_xml(structure, ff, file_name):
     angle_types = tuple(angle_types)
 
     dihedral_types = set()
-    if "OPLS" in ff.name:
+    if torsion_type.lower() == "rb":
         for i in structure.rb_torsions:
+            dihedral_types.add(
+                (i.atom1.type, i.atom2.type, i.atom3.type, i.atom4.type)
+            )
+    else:
+        for i in structure.dihedrals:
             dihedral_types.add(
                 (i.atom1.type, i.atom2.type, i.atom3.type, i.atom4.type)
             )
@@ -54,6 +85,7 @@ def parmed_to_foyer_xml(structure, ff, file_name):
             )
             f.write(line)
         f.write("\t</AtomTypes>\n")
+
         # Write out bond parameters
         f.write("\t<HarmonicBondForce>\n")
         for bond in bond_types:
@@ -63,6 +95,7 @@ def parmed_to_foyer_xml(structure, ff, file_name):
             line = write_harmonic_bond(class1=class1, class2=class2, l0=params["length"], k=params["k"])
             f.write(line)
         f.write("\t</HarmonicBondForce>\n")
+
         # Write out angle parameters
         f.write("\t<HarmonicAngleForce>\n")
         for angle in angle_types:
@@ -75,8 +108,9 @@ def parmed_to_foyer_xml(structure, ff, file_name):
             )
             f.write(line)
         f.write("\t</HarmonicAngleForce>\n")
+
         # Write out dihedral/torsion parameters
-        if "OPLS" in ff.name:
+        if torsion_type == "rb":
             f.write("\t<RBTorsionForce>\n")
             for dihedral in dihedral_types:
                 params = ff.get_parameters("rb_propers", dihedral)
@@ -98,6 +132,30 @@ def parmed_to_foyer_xml(structure, ff, file_name):
                 )
                 f.write(line)
             f.write("\t</RBTorsionForce>\n")
+        else:
+            f.write("\t<PeriodicTorsionForce>\n")
+            for dihedral in dihedral_types:
+                params = ff.get_parameters("periodic_propers", dihedral)
+                class1 = ff.atomTypeClasses[dihedral[0]]
+                class2 = ff.atomTypeClasses[dihedral[1]]
+                class3 = ff.atomTypeClasses[dihedral[2]]
+                class4 = ff.atomTypeClasses[dihedral[3]]
+                line = write_rb_torsion(
+                    class1=class1,
+                    class2=class2,
+                    class3=class3,
+                    class4=class4,
+                    c0=params["c0"],
+                    c1=params["c1"],
+                    c2=params["c2"],
+                    c3=params["c3"],
+                    c4=params["c4"],
+                    c5=params["c5"],
+                )
+                f.write(line)
+            f.write("\t</RBTorsionForce>\n")
+    
+
         # Write out non-bonded parameters 
         f.write(f'\t<NonbondedForce coulomb14scale="{ff.coulomb14scale}" lj14scale="{ff.lj14scale}">\n')
         for atom in atom_types:
@@ -118,12 +176,14 @@ def mbuild_to_foyer_xml(
     dihedral_params=None,
     dihedral_type="periodic",
     non_bonded_params=None,
-    combining_rule=None,
+    combining_rule="geometric",
     name="",
     version="",
-    coulomb14scale="",
-    lj14scale=""
+    coulomb14scale=1.0,
+    lj14scale=1.0
 ):
+    """
+    """
     
     particle_types = tuple(set(p.name for p in compound.particles()))
     particle_masses = []
@@ -131,11 +191,10 @@ def mbuild_to_foyer_xml(
         mass = [p.mass for p in compound.particles_by_name(_type)][0]
         particle_masses.append(mass)
     
-    
-    print(particle_types)
     with open(file_name, "w") as f:
         f.write(f'<ForceField name="{name}" version="{version}" combining_rule="{combining_rule}">\n')
         f.write("\t<AtomTypes>\n")
+        # Write the particle types
         for idx, p in enumerate(particle_types):
             line = write_atom_type(
                 name=p,
@@ -146,7 +205,8 @@ def mbuild_to_foyer_xml(
             )
             f.write(line)
         f.write("\t</AtomTypes>\n")
-        
+
+        # Write out harmonic bond parameters 
         f.write("<HarmonicBondForce>\n")
         for b in bond_params:
             line = write_harmonic_bond(
@@ -157,7 +217,8 @@ def mbuild_to_foyer_xml(
             )
             f.write(line)
         f.write("</HarmonicBondForce>\n")
-        
+
+        # Write out harmonic angle parameters 
         f.write("<HarmonicAngleForce>\n")
         for a in angle_params:
             line = write_harmonic_angle(
@@ -169,7 +230,8 @@ def mbuild_to_foyer_xml(
             )
             f.write(line)
         f.write("</HarmonicAngleForce>\n")
-        
+
+        # Write out dihedral parameters 
         if dihedral_type == "periodic":
             f.write("<PeriodicTorsionForce>\n")
             for d in dihedral_params:
@@ -184,7 +246,8 @@ def mbuild_to_foyer_xml(
                 )
                 f.write(line)
             f.write("</PeriodicTorsionForce>\n")
-        
+
+        # Write out non-bonded parameters 
         f.write(f'\t<NonbondedForce coulomb14scale="{coulomb14scale}" lj14scale="{lj14scale}">\n')
         for a in non_bonded_params:
             line = write_non_bonded(
@@ -202,44 +265,45 @@ def mbuild_to_foyer_xml(
 
 
 def write_atom_type(name, atom_type, element, mass, _def="", desc=""):
+    """Creates a line for an atom type following the foyer-xml format"""
     line = f'\t\t<Type name="{name}" class="{atom_type}" element="{element}" mass="{mass}" def="{_def}" desc="{desc}"/>\n'
     return line
 
 
 def write_harmonic_bond(class1, class2, l0, k):
+    """
+    """
     line = f'\t\t<Bond class1="{class1}" class2="{class2}" length="{l0}" k="{k}"/>\n'
     return line
 
 
 def write_harmonic_angle(class1, class2, class3, t0, k):
+    """
+    """
     line = f'\t\t<Angle class1="{class1}" class2="{class2}" class3="{class3}" angle="{t0}" k="{k}"/>\n'
     return line
 
 
 def write_non_bonded(name, charge, sigma, epsilon):
+    """
+    """
     line = f'\t\t<Atom type="{name}" charge="{charge}" sigma="{sigma}" epsilon="{epsilon}"/>\n'
     return line
 
 
 def write_rb_torsion(class1, class2, class3, class4, c0, c1, c2, c3, c4, c5):
+    """
+    """
     line = f'\t\t<Proper class1="{class1}" class2="{class2}" class3="{class3}" class4="{class4}" c0="{c0}" c1="{c1}" c2="{c2}" c3="{c3}" c4="{c4}" c5="{c5}"/>\n'
     return line
 
 
 def write_periodic_dihedral(class1, class2, class3, class4, periodicity, k, phase):
-    """"""
-    # Extend the lists of periodicity, k and phase to ensure they are always len 4
-    periodicity.extend([""] * (4-len(periodicity)))
-    k.extend([""] * (4-len(k)))
-    phase.extend([""] * (4-len(phase)))
+    """
+    """
+    # Extend lists of periodicity, k and phase to ensure they are always len 4
+    periodicity.extend([0] * (4-len(periodicity)))
+    k.extend([0] * (4-len(k)))
+    phase.extend([0] * (4-len(phase)))
     line = f'\t\t<Proper class1="{class1}" class2="{class2}" class3="{class3}" class4="{class4}" periodicity1="{periodicity[0]}" k1="{k[0]}" phase1="{phase[0]}" periodicity2="{periodicity[1]}" k2="{k[1]}" phase2="{phase[1]}" periodicity3="{periodicity[2]}" k3="{k[2]}" phase3="{phase[2]}" periodicity4="{periodicity[3]}" k4="{k[3]}" phase4="{phase[3]}"/>\n'
     return line
-    
-
-
-
-
-
-
-
-
