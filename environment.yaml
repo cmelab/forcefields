@@ -12,6 +12,7 @@ dependencies:
   # 3rd party
   - foyer
   - forcefield-utilities
+  - freud
   - gmso
   - hoomd
   - jupyter
@@ -22,10 +23,11 @@ dependencies:
   - openff-toolkit <0.11
   - openff-forcefields
   - openff-units
-  - smirnoff99Frosst
   - openmm
   - openmmforcefields >=0.11.2
+  - py3Dmol
   - scipy
+  - smirnoff99Frosst
   - tqdm
   # Pytorch
   - pytorch>=1.8.0
@@ -40,3 +42,6 @@ dependencies:
   - qcportal>=0.15.0
   - sphinx
   - sphinx_rtd_theme
+  - pip:
+    - git+https://github.com/rsdefever/antefoyer.git@master
+    - git+https://github.com/choderalab/espaloma.git@master
