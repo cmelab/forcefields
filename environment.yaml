@@ -10,21 +10,22 @@ dependencies:
   - python
   - pip
   # 3rd party
-  - openeye-toolkits
-  - hoomd
-  - mbuild
   - foyer
   - forcefield-utilities
   - gmso
-  - numpy
+  - hoomd
+  - jupyter
   - matplotlib
-  - scipy
+  - mbuild
+  - numpy
+  - openeye-toolkits
   - openff-toolkit <0.11
   - openff-forcefields
   - openff-units
   - smirnoff99Frosst
   - openmm
   - openmmforcefields >=0.11.2
+  - scipy
   - tqdm
   # Pytorch
   - pytorch>=1.8.0
