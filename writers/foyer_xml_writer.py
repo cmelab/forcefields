@@ -271,6 +271,92 @@ def mbuild_to_foyer_xml(
     for p in compound.particles():
         p.name = f"_{p.name}"
 
+def write_foyer_xml(
+    file_name=None,
+    atom_types=None,
+    bond_params=None,
+    angle_params=None,
+    dihedral_params=None,
+    dihedral_type="periodic",
+    non_bonded_params=None,
+    combining_rule="geometric",
+    name="",
+    version="",
+    coulomb14scale=1.0,
+    lj14scale=1.0
+):
+    """
+    """
+
+    with open(file_name, "w") as f:
+        f.write(f'<ForceField name="{name}" version="{version}" combining_rule="{combining_rule}">\n')
+        f.write("\t<AtomTypes>\n")
+        # Write the particle types
+        for a in atom_types:
+            line = write_atom_type(
+                name=a,
+                atom_type=a,
+                element=f"_{a}",
+                mass=atom_types[a]["mass"],
+                _def=f"_{a}",
+            )
+            f.write(line)
+        f.write("\t</AtomTypes>\n")
+
+        # Write out harmonic bond parameters 
+        f.write("<HarmonicBondForce>\n")
+        for b in bond_params:
+            line = write_harmonic_bond(
+                class1=b[0],
+                class2=b[1],
+                l0=bond_params[b]["l0"],
+                k=bond_params[b]["k"]
+            )
+            f.write(line)
+        f.write("</HarmonicBondForce>\n")
+
+        # Write out harmonic angle parameters 
+        f.write("<HarmonicAngleForce>\n")
+        for a in angle_params:
+            line = write_harmonic_angle(
+                class1=a[0],
+                class2=a[1],
+                class3=a[2],
+                t0=angle_params[a]["t0"],
+                k=angle_params[a]["k"]
+            )
+            f.write(line)
+        f.write("</HarmonicAngleForce>\n")
+
+        # Write out dihedral parameters 
+        if dihedral_type == "periodic":
+            f.write("<PeriodicTorsionForce>\n")
+            for d in dihedral_params:
+                line = write_periodic_dihedral(
+                    class1=d[0],
+                    class2=d[1],
+                    class3=d[2],
+                    class4=d[3],
+                    periodicity=dihedral_params[d]["periodicity"],
+                    k=dihedral_params[d]["k"],
+                    phase=dihedral_params[d]["phase"],
+                )
+                f.write(line)
+            f.write("</PeriodicTorsionForce>\n")
+
+        # Write out non-bonded parameters 
+        f.write(f'\t<NonbondedForce coulomb14scale="{coulomb14scale}" lj14scale="{lj14scale}">\n')
+        for a in non_bonded_params:
+            line = write_non_bonded(
+                name=a,
+                charge=non_bonded_params[a]["charge"],
+                sigma=non_bonded_params[a]["sigma"],
+                epsilon=non_bonded_params[a]["epsilon"]
+            )
+            f.write(line)
+        f.write('\t</NonbondedForce>\n')
+        f.write('</ForceField>')
+
 
 def write_atom_type(name, atom_type, element, mass, _def="", desc=""):
     """Creates a line for an atom type following the foyer-xml format"""
