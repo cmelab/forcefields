@@ -82,15 +82,28 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type=None):
             atom_type = ff.atomTypeClasses[atom]
             element=ff.atomTypeElements[atom]
             mass = ele.element_from_symbol(element).mass
-            _def = ff.atomTypeDefinitions[atom]
-            desc = ff.atomTypeDesc[atom]
+            try:
+                _def = ff.atomTypeDefinitions[atom]
+            except KeyError:
+                _def = ""
+            try:
+                desc = ff.atomTypeDesc[atom]
+            except KeyError:
+                desc = ""
+            try:
+                override_types = list(ff.atomTypeOverrides[atom])
+                override_keep = [i for i in override_types if i in atom_types]
+                override = ",".join(override_keep)
+            except KeyError:
+                override = ""
             line = write_atom_type(
                 name=atom,
                 atom_type=ff.atomTypeClasses[atom],
                 element=ff.atomTypeElements[atom],
                 mass=mass,
                 _def=_def,
-                desc=desc
+                desc=desc,
+                override=override
             )
             f.write(line)
         f.write("\t</AtomTypes>\n")
@@ -272,9 +285,9 @@ def mbuild_to_foyer_xml(
         p.name = f"_{p.name}"
 
 
-def write_atom_type(name, atom_type, element, mass, _def="", desc=""):
+def write_atom_type(name, atom_type, element, mass, _def="", desc="", override=""):
     """Creates a line for an atom type following the foyer-xml format"""
-    line = f'\t\t<Type name="{name}" class="{atom_type}" element="{element}" mass="{mass}" def="{_def}" desc="{desc}"/>\n'
+    line = f'\t\t<Type name="{name}" class="{atom_type}" element="{element}" mass="{mass}" def="{_def}" desc="{desc}" overrides="{override}"/>\n'
     return line
 
 
