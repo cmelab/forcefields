@@ -10,7 +10,6 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type=None):
     """Given a typed Parmed structure, and the Foyer forcefield applied,
     creates and saves a trucated Foyer xml file containing only the
     parameters used in the system.
-
     Parameters:
     -----------
     structure : pmd.Structure; required
@@ -19,17 +18,14 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type=None):
         A Foyer Forcefield object that was used when creating the typed Parmed structure
     file_name : str; required
         The file path and name to save the truncated xml file to
-
     Example:
     --------
     import mbuild as mb
     import foyer
-
     alkane = mb.load("CCCCC", smiles=True)
     opls = foyer.Forcefield(name="oplsaa")
     alkane_typed = opls.apply(alkane)
     parmed_to_foyer_xml(alkane_typed, opls, "alkane_opls.xml")
-
     """
     if ff.name and "OPLS" in ff.name:
         if torsion_type and torsion_type != "rb":
