@@ -278,9 +278,6 @@ def mbuild_to_foyer_xml(
         f.write('\t</NonbondedForce>\n')
         f.write('</ForceField>')
 
-    for p in compound.particles():
-        p.name = f"_{p.name}"
-
 
 def write_atom_type(name, atom_type, element, mass, _def="", desc="", override=""):
     """Creates a line for an atom type following the foyer-xml format"""
