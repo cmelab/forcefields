@@ -208,6 +208,7 @@ def mbuild_to_foyer_xml(
         mass = [p.mass for p in compound.particles_by_name(_type)][0]
         particle_masses.append(mass)
     
+        
     with open(file_name, "w") as f:
         f.write(f'<ForceField name="{name}" version="{version}" combining_rule="{combining_rule}">\n')
         f.write("\t<AtomTypes>\n")
@@ -322,5 +323,5 @@ def write_periodic_dihedral(class1, class2, class3, class4, periodicity, k, phas
     periodicity.extend([0] * (4-len(periodicity)))
     k.extend([0] * (4-len(k)))
     phase.extend([0] * (4-len(phase)))
-    line = f'\t\t<Proper class1="{class1}" class2="{class2}" class3="{class3}" class4="{class4}" periodicity1="{periodicity[0]}" k1="{k[0]}" phase1="{phase[0]}" periodicity2="{periodicity[1]}" k2="{k[1]}" phase2="{phase[1]}" periodicity3="{periodicity[2]}" k3="{k[2]}" phase3="{phase[2]}" periodicity4="{periodicity[3]}" k4="{k[3]}" phase4="{phase[3]}"/>\n'
+    line = f'\t\t<Proper class1="{class1}" class2="{class2}" class3="{class3}" class4="{class4}" periodicity1="{periodicity[0]}" k1="{k[0]}" phase1="{phase[0]}" periodicity2="{periodicity[1]}" k2="{k[1]}" phase2="{phase[1]}" periodicity3="{periodicity[2]}" k3="{k[2]}" phase3="{phase[2]}" periodicity4="{periodicity[3]}" k4="{k[3]}" phase4="{phase[3]}" periodicity5="{periodicity[4]}" k5="{k[4]}" phase5="{phase[4]}" periodicity6="{periodicity[5]}" k6="{k[5]}" phase6="{phase[5]}"/>\n'
     return line
