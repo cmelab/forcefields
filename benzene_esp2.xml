@@ -1,7 +1,7 @@
 <ForceField name="" version="" combining_rule="geometric">
 	<AtomTypes>
-		<Type name="H" class="H" element="_H" mass="1.008" def="_H" desc="" overrides=""/>
-		<Type name="C" class="C" element="_C" mass="12.011" def="_C" desc="" overrides=""/>
+		<Type name="H1" class="H1" element="_H1" mass="1.008" def="_H1" desc="" overrides=""/>
+		<Type name="C1" class="C1" element="_C1" mass="12.011" def="_C1" desc="" overrides=""/>
 	</AtomTypes>
 <HarmonicBondForce>
 		<Bond class1="C1" class2="C1" length="0.14950230459380798" k="145133.81359445286"/>
