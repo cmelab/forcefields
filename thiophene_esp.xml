@@ -1,23 +1,23 @@
 <ForceField name="" version="" combining_rule="geometric">
 	<AtomTypes>
-		<Type name="S1" class="S1" element="_S1" mass="32.06" def="_S1" desc="" overrides=""/>
-		<Type name="C1" class="C1" element="_C1" mass="12.011" def="_C1" desc="" overrides=""/>
-		<Type name="H1" class="H1" element="_H1" mass="1.008" def="_H1" desc="" overrides=""/>
 		<Type name="H2" class="H2" element="_H2" mass="1.008" def="_H2" desc="" overrides=""/>
+		<Type name="S1" class="S1" element="_S1" mass="32.06" def="_S1" desc="" overrides=""/>
+		<Type name="H1" class="H1" element="_H1" mass="1.008" def="_H1" desc="" overrides=""/>
+		<Type name="C1" class="C1" element="_C1" mass="12.011" def="_C1" desc="" overrides=""/>
 	</AtomTypes>
 <HarmonicBondForce>
 		<Bond class1="C1" class2="C1" length="0.15679500885438177" k="136740.56482391074"/>
 		<Bond class1="C1" class2="H1" length="0.10790778915292444" k="253527.38950815462"/>
 		<Bond class1="C1" class2="S1" length="0.18148090096623354" k="39107.91568331748"/>
-		<Bond class1="C1" class2="H2" length="0.10242247132280273" k="341087.18729681364"/>
+		<Bond class1="C1" class2="H2" length="0.10242249024765454" k="341087.18729681364"/>
 		<Bond class1="S1" class2="C1" length="0.18148090096623354" k="39107.91568331748"/>
 </HarmonicBondForce>
 <HarmonicAngleForce>
 		<Angle class1="C1" class2="C1" class3="C1" angle="1.9162074327468872" k="479.07388581800774"/>
-		<Angle class1="C1" class2="C1" class3="H1" angle="2.0014548301696777" k="378.0560087516393"/>
-		<Angle class1="C1" class2="C1" class3="S1" angle="2.1063485145568848" k="348.38067057961484"/>
+		<Angle class1="C1" class2="C1" class3="H1" angle="2.001455068588257" k="378.055969628646"/>
+		<Angle class1="C1" class2="C1" class3="S1" angle="2.1063485145568848" k="348.38070970260816"/>
 		<Angle class1="C1" class2="C1" class3="H2" angle="2.05912709236145" k="416.06963049470346"/>
-		<Angle class1="C1" class2="S1" class3="C1" angle="1.6341766119003296" k="365.4949848942009"/>
+		<Angle class1="C1" class2="S1" class3="C1" angle="1.6341763734817505" k="365.4949848942009"/>
 		<Angle class1="S1" class2="C1" class3="H2" angle="2.239353656768799" k="331.2090802027757"/>
 </HarmonicAngleForce>
 <PeriodicTorsionForce>
