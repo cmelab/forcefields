@@ -1,4 +1,5 @@
 espaloma_model.pt
 .ipynb_checkpoints
-.ipynb
+*.ipynb
+*.xml
 
