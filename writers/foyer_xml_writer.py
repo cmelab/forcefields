@@ -10,6 +10,7 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type=None):
     """Given a typed Parmed structure, and the Foyer forcefield applied,
     creates and saves a trucated Foyer xml file containing only the
     parameters used in the system.
+
     Parameters:
     -----------
     structure : pmd.Structure; required
@@ -18,6 +19,7 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type=None):
         A Foyer Forcefield object that was used when creating the typed Parmed structure
     file_name : str; required
         The file path and name to save the truncated xml file to
+
     Example:
     --------
     import mbuild as mb
@@ -26,6 +28,7 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type=None):
     opls = foyer.Forcefield(name="oplsaa")
     alkane_typed = opls.apply(alkane)
     parmed_to_foyer_xml(alkane_typed, opls, "alkane_opls.xml")
+
     """
     if ff.name and "OPLS" in ff.name:
         if torsion_type and torsion_type != "rb":
@@ -154,6 +157,8 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type=None):
             f.write("\t<PeriodicTorsionForce>\n")
             for dihedral in dihedral_types:
                 params = ff.get_parameters("periodic_propers", dihedral)
+                if not params:
+                    continue
                 class1 = ff.atomTypeClasses[dihedral[0]]
                 class2 = ff.atomTypeClasses[dihedral[1]]
                 class3 = ff.atomTypeClasses[dihedral[2]]
@@ -171,6 +176,7 @@ def parmed_to_foyer_xml(structure, ff, file_name, torsion_type=None):
                 )
                 f.write(line)
             f.write("\t</PeriodicTorsionForce>\n")
+
     
 
         # Write out non-bonded parameters 
@@ -320,5 +326,5 @@ def write_periodic_dihedral(class1, class2, class3, class4, periodicity, k, phas
     periodicity.extend([0] * (4-len(periodicity)))
     k.extend([0] * (4-len(k)))
     phase.extend([0] * (4-len(phase)))
-    line = f'\t\t<Proper class1="{class1}" class2="{class2}" class3="{class3}" class4="{class4}" periodicity1="{periodicity[0]}" k1="{k[0]}" phase1="{phase[0]}" periodicity2="{periodicity[1]}" k2="{k[1]}" phase2="{phase[1]}" periodicity3="{periodicity[2]}" k3="{k[2]}" phase3="{phase[2]}" periodicity4="{periodicity[3]}" k4="{k[3]}" phase4="{phase[3]}" periodicity5="{periodicity[4]}" k5="{k[4]}" phase5="{phase[4]}" periodicity6="{periodicity[5]}" k6="{k[5]}" phase6="{phase[5]}"/>\n'
+    line = f'\t\t<Proper class1="{class1}" class2="{class2}" class3="{class3}" class4="{class4}" periodicity1="{periodicity[0]}" k1="{k[0]}" phase1="{phase[0]}" periodicity2="{periodicity[1]}" k2="{k[1]}" phase2="{phase[1]}" periodicity3="{periodicity[2]}" k3="{k[2]}" phase3="{phase[2]}" periodicity4="{periodicity[3]}" k4="{k[3]}" phase4="{phase[3]}"/>\n'
     return line
