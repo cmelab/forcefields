@@ -1,10 +1,10 @@
 <ForceField name="" version="" combining_rule="geometric">
 	<AtomTypes>
+		<Type name="H2" class="H2" element="_H2" mass="1.008" def="_H2" desc="" overrides=""/>
 		<Type name="H1" class="H1" element="_H1" mass="1.008" def="_H1" desc="" overrides=""/>
 		<Type name="S1" class="S1" element="_S1" mass="14.007" def="_S1" desc="" overrides=""/>
 		<Type name="C1" class="C1" element="_C1" mass="12.011" def="_C1" desc="" overrides=""/>
 		<Type name="N1" class="N1" element="_N1" mass="32.06" def="_N1" desc="" overrides=""/>
-		<Type name="H2" class="H2" element="_H2" mass="1.008" def="_H2" desc="" overrides=""/>
 	</AtomTypes>
 <HarmonicBondForce>
 		<Bond class1="C1" class2="C1" length="0.14126796279013415" k="81979.42229648886"/>
