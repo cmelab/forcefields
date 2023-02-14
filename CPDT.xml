@@ -1,14 +1,14 @@
 <ForceField name="" version="" combining_rule="geometric">
 	<AtomTypes>
-		<Type name="C0" class="C0" element="_C0" mass="12.011" def="_C0" desc="" overrides=""/>
-		<Type name="C4" class="C4" element="_C4" mass="12.011" def="_C4" desc="" overrides=""/>
-		<Type name="C2" class="C2" element="_C2" mass="12.011" def="_C2" desc="" overrides=""/>
 		<Type name="C5" class="C5" element="_C5" mass="12.011" def="_C5" desc="" overrides=""/>
 		<Type name="H7" class="H7" element="_H7" mass="1.008" def="_H7" desc="" overrides=""/>
+		<Type name="H8" class="H8" element="_H8" mass="1.008" def="_H8" desc="" overrides=""/>
+		<Type name="C4" class="C4" element="_C4" mass="12.011" def="_C4" desc="" overrides=""/>
+		<Type name="C2" class="C2" element="_C2" mass="12.011" def="_C2" desc="" overrides=""/>
+		<Type name="C0" class="C0" element="_C0" mass="12.011" def="_C0" desc="" overrides=""/>
+		<Type name="C1" class="C1" element="_C1" mass="12.011" def="_C1" desc="" overrides=""/>
 		<Type name="H6" class="H6" element="_H6" mass="1.008" def="_H6" desc="" overrides=""/>
 		<Type name="S3" class="S3" element="_S3" mass="32.06" def="_S3" desc="" overrides=""/>
-		<Type name="H8" class="H8" element="_H8" mass="1.008" def="_H8" desc="" overrides=""/>
-		<Type name="C1" class="C1" element="_C1" mass="12.011" def="_C1" desc="" overrides=""/>
 	</AtomTypes>
 <HarmonicBondForce>
 		<Bond class1="C0" class2="C1" length="0.16370454794869382" k="62091.06678567673"/>
