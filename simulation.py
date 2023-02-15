@@ -4,15 +4,15 @@ import hoomd
 from mbuild.formats.hoomd_forcefield import create_hoomd_forcefield
 
 
-esp_ff = foyer.Forcefield(forcefield_files="/Users/madilyn/Projects/repos/forcefields/PCPDTFBT_C1_BO.xml")
+esp_ff = foyer.Forcefield(forcefield_files="/Users/madilyn/Projects/repos/forcefields/xml_files/PIDTBT_nC16.xml")
 
 # We have to add the underscore to the names manually if we are using foyer XML files without SMARTS definitions
-PCPDTFBT_C1_BO = mb.load("/Users/madilyn/Projects/repos/forcefields/PCPDTFBT_C1_BO_typed.mol2")
+PIDTBT_nC16 = mb.load("/Users/madilyn/Projects/repos/forcefields/PIDTBT_nC16_typed.mol2")
 
-for p in PCPDTFBT_C1_BO.particles():
+for p in PIDTBT_nC16.particles():
     p.name = f"_{p.name}"
-    
-box = mb.fill_box(compound=PCPDTFBT_C1_BO, n_compounds=1, box=[10,10,10])
+
+box = mb.fill_box(compound=PIDTBT_nC16, n_compounds=1, box=[10,10,10])
 box_pmd = esp_ff.apply(box)
 
 snapshot, forcefield, refs = create_hoomd_forcefield(box_pmd, auto_scale=True, r_cut=2.5)
