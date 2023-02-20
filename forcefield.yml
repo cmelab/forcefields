@@ -1,0 +1,40 @@
+name: forcefield
+channels:
+  - conda-forge
+  - dglteam
+  - openeye
+  - defaults
+  - anaconda
+dependencies:
+  - openff-forcefields
+  - nose-timer
+  - python
+  - pytest
+  - pip
+  - pytest-cov
+  - openmmforcefields[version='>=0.11.2']
+  - smirnoff99frosst
+  - tqdm
+  - dgl=0.9.1=py39_0
+  - jupyter
+  - mbuild
+  - scipy
+  - matplotlib
+  - py3dmol
+  - pytorch[version='>=1.8.0']
+  - qcportal[version='>=0.15.0']
+  - sphinx
+  - openmm
+  - coverage
+  - openff-units
+  - nose
+  - openff-toolkit[version='<0.11']
+  - codecov
+  - openeye-toolkits
+  - numpy
+  - sphinx_rtd_theme
+  - foyer
+  - hoomd
+  - gsd
+  - wget
+  - openbabel
