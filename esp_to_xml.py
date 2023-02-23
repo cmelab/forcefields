@@ -28,8 +28,8 @@ if not os.path.exists("espaloma_model.pt"):
     os.system("wget http://data.wangyq.net/espaloma_model.pt")
 
 
-mol2_file = "/Users/madilyn/Projects/repos/forcefields/mol2files/bto.mol2"
-sdf_file = "/Users/madilyn/Projects/repos/forcefields/sdf_files/bto.sdf"
+mol2_file = "/Users/madilyn/Projects/repos/forcefields/mol2files/PCPDTPT_ene_HD.mol2"
+sdf_file = "/Users/madilyn/Projects/repos/forcefields/sdf_files/PCPDTPT_ene_HD.sdf"
 
 
 #using functions from bond_walker.py
@@ -185,7 +185,7 @@ for i in range(pair_forces.getNumParticles()):
 
 # Save the forcefield XML file for future use, so that we don't have to repeat the espaloma process everytime
 mbuild_to_foyer_xml(
-    file_name="/Users/madilyn/Projects/repos/forcefields/xml_files/bto.xml", #change this to whatever you want to save your xml file as
+    file_name="/Users/madilyn/Projects/repos/forcefields/xml_files/PCPDTPT_ene_HD.xml", #change this to whatever you want to save your xml file as
     compound=mol2comp,
     bond_params=bond_dict,
     angle_params=angle_dict,
@@ -199,4 +199,4 @@ mbuild_to_foyer_xml(
     lj14scale=1.0)
 
 # Save the mb.Compound with the new atom type names for future use.
-mol2comp.save("/Users/madilyn/Projects/repos/forcefields/mol2files/bto_typed.mol2", overwrite=True)
+mol2comp.save("/Users/madilyn/Projects/repos/forcefields/mol2files/PCPDTPT_ene_HD_typed.mol2", overwrite=True)
