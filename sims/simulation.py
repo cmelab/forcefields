@@ -3,8 +3,6 @@ import foyer
 import hoomd
 from mbuild.formats.hoomd_forcefield import create_hoomd_forcefield
 
-
-
 esp_ff = foyer.Forcefield(forcefield_files="/Users/madilyn/Projects/repos/forcefields/xml_files/bto.xml")
 
 # We have to add the underscore to the names manually if we are using foyer XML files without SMARTS definitions
@@ -38,7 +36,7 @@ sim.state.thermalize_particle_momenta(filter=hoomd.filter.All(), kT=kt)
 # Set up GSD writer
 gsd_writer = hoomd.write.GSD(
     trigger=hoomd.trigger.Periodic(int(2e2)),
-    filename="traj_bto.gsd",  #name the output file
+filename="traj_test.gsd",  #name the output file
     mode="wb"
 )
 sim.operations.writers.append(gsd_writer)
