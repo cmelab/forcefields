@@ -1,4 +1,4 @@
-name: forcefield
+name: ff2
 channels:
   - conda-forge
   - dglteam
@@ -38,3 +38,5 @@ dependencies:
   - gsd
   - wget
   - openbabel
+  - pip:
+      - git+https://github.com/choderalab/espaloma.git@master
