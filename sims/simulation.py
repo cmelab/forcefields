@@ -4,10 +4,10 @@ import hoomd
 from mbuild.formats.hoomd_forcefield import create_hoomd_forcefield
 
 
-esp_ff = foyer.Forcefield(forcefield_files="/Users/madilyn/Projects/repos/forcefields/xml_files/PIDTBT_nC16.xml")
+esp_ff = foyer.Forcefield(forcefield_files="/bsuhome/mpaul/scratch/forcefields/xml_files/PIDTBT_nC16.xml")
 
 # We have to add the underscore to the names manually if we are using foyer XML files without SMARTS definitions
-PIDTBT_nC16 = mb.load("/Users/madilyn/Projects/repos/forcefields/PIDTBT_nC16_typed.mol2")
+PIDTBT_nC16 = mb.load("/bsuhome/mpaul/scratch/forcefields/mol2files/PIDTBT_nC16_typed.mol2")
 
 for p in PIDTBT_nC16.particles():
     p.name = f"_{p.name}"
@@ -37,7 +37,7 @@ sim.state.thermalize_particle_momenta(filter=free_particle, kT=kt)
 # Set up GSD writer
 gsd_writer = hoomd.write.GSD(
     trigger=hoomd.trigger.Periodic(int(2e2)),
-    filename="traj_CPDT.gsd",  #name the output file
+    filename="traj_test.gsd",  #name the output file
     mode="wb"
 )
 sim.operations.writers.append(gsd_writer)

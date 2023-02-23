@@ -5,7 +5,7 @@
 #SBATCH -N 1
 #SBATCH -t 72:00:00 
 
-source /home/gwenwhite/.bashrc
+source /bsuhome/mpaul/.bashrc
 module load slurm
-conda activate forcefield
-python sim/simulation.py
+conda activate ff2
+python sims/simulation.py
