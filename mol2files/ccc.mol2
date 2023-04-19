@@ -1,0 +1,24 @@
+@<TRIPOS>MOLECULE
+Compound
+7 6 1 0 1
+SMALL
+NO_CHARGES
+@<TRIPOS>CRYSIN
+    8.6943     6.5047     6.5044    90.0000    90.0000    90.0000  1  1
+@<TRIPOS>ATOM
+       1 C           -1.3025     0.0077    -0.0016 C             1 Compound
+       2 C            0.0000     0.0000     0.0000 C             1 Compound
+       3 C            1.3025    -0.0077     0.0016 C             1 Compound
+       4 H           -1.8395     0.7632     0.5554 H             1 Compound
+       5 H           -1.8469    -0.7415    -0.5600 H             1 Compound
+       6 H            1.8390    -0.5688     0.7545 H             1 Compound
+       7 H            1.8474     0.5471    -0.7499 H             1 Compound
+@<TRIPOS>BOND
+       1        2        1 1
+       2        4        1 1
+       3        5        1 1
+       4        3        2 1
+       5        6        3 1
+       6        7        3 1
+@<TRIPOS>SUBSTRUCTURE
+       1 Compound        1 RESIDUE    0 **** ROOT      0
