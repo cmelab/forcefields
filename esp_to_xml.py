@@ -27,17 +27,15 @@ warnings.filterwarnings("ignore")
 if not os.path.exists("espaloma_model.pt"):
     os.system("wget http://data.wangyq.net/espaloma_model.pt")
 
-
-mol2_file = "/Users/madilyn/Projects/repos/forcefields/mol2files/PCPDTPT_ene_HD.mol2"
-sdf_file = "/Users/madilyn/Projects/repos/forcefields/sdf_files/PCPDTPT_ene_HD.sdf"
+mol2_file = "/Users/madilyn/Projects/repos/forcefields/mol2files/y6.mol2"
+sdf_file = "/Users/madilyn/Projects/repos/forcefields/sdf_files/y6.sdf"
+xml_filename = "/Users/madilyn/Projects/repos/forcefields/xml_files/y6.xml"
+typed_mol2 = "/Users/madilyn/Projects/repos/forcefields/mol2files/y6_typed.mol2"
 
 
 #using functions from bond_walker.py
 b= BondWalker(Molecule.from_file(sdf_file,file_format = "sdf"))
 compound = b.fill_in_bonds()
-compound.visualize()
-
-
 
 #Running the espaloma code
 
@@ -100,15 +98,13 @@ if nx.is_isomorphic(Gopenmm,Gparmed):
 #if nx.isomorphism.tree_isomorphism(tree_openmm,tree_parmed):  <- want this work
     for i in range(pair_forces.getNumParticles()):
         pair_parms = pair_forces.getParticleParameters(index=i)
-        charge = pair_parms[0]
-        sigma = pair_parms[1]
-        epsilon = pair_parms[2]
-        if (charge, sigma, epsilon) not in particle_types: 
-            particle_types.append((charge, sigma, epsilon))
+        #charge = round(pair_parms[0]/pair_parms[0].unit,5)
+        sigma = pair_parms[1]/pair_parms[1].unit
+        epsilon = pair_parms[2]/pair_parms[2].unit
+        if (sigma, epsilon) not in particle_types: 
+            particle_types.append((sigma, epsilon))
     
-        type_map[compound.atoms[i].molecule_atom_index] = "".join([compound.atoms[i].name , str(particle_types.index((charge, sigma, epsilon)))])
-
-
+        type_map[compound.atoms[i].molecule_atom_index] = "".join([compound.atoms[i].name , str(particle_types.index((sigma, epsilon)))])
 
 # Rename the particle types so that they match the xml file
 # This is needed when we aren't using SMARTS matching with Foyer.
@@ -116,6 +112,7 @@ if nx.is_isomorphic(Gopenmm,Gparmed):
 mol2comp = mb.load(mol2_file)
 
 for index in type_map:
+    #print(index, type_map[index])
     mol2comp[index].name = type_map[index]
 
 #Create your dictionaries:
@@ -129,7 +126,6 @@ for i in range(bond_forces.getNumBonds()):
     k = bond_parms[3]/bond_parms[3].unit
     bond_dict[type_map[bond_parms[0]],type_map[bond_parms[1]]] = {'k':k,'l0':l0}
 #print(bond_dict)
-
 
 
 angle_types = []
@@ -178,14 +174,12 @@ for i in range(pair_forces.getNumParticles()):
     #if (charge,sigma,epsilon) not in nonbonded_types:
     nonbonded_types.append((charge,sigma,epsilon))
     nonbonded_dict[(type_map[i])]={'charge':charge,'sigma':sigma,'epsilon':epsilon}
-#print(nonbonded_dict)
-
-
+    #print(type_map[i], nonbonded_dict[(type_map[i])])
 
 
 # Save the forcefield XML file for future use, so that we don't have to repeat the espaloma process everytime
 mbuild_to_foyer_xml(
-    file_name="/Users/madilyn/Projects/repos/forcefields/xml_files/PCPDTPT_ene_HD.xml", #change this to whatever you want to save your xml file as
+    file_name=xml_filename,
     compound=mol2comp,
     bond_params=bond_dict,
     angle_params=angle_dict,
@@ -198,5 +192,5 @@ mbuild_to_foyer_xml(
     coulomb14scale=1.0,
     lj14scale=1.0)
 
-# Save the mb.Compound with the new atom type names for future use.
-mol2comp.save("/Users/madilyn/Projects/repos/forcefields/mol2files/PCPDTPT_ene_HD_typed.mol2", overwrite=True)
+#Save the mb.Compound with the new atom type names for future use.
+mol2comp.save(typed_mol2, overwrite=True) 
