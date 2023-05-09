@@ -27,10 +27,10 @@ warnings.filterwarnings("ignore")
 if not os.path.exists("espaloma_model.pt"):
     os.system("wget http://data.wangyq.net/espaloma_model.pt")
 
-mol2_file = "/Users/madilyn/Projects/repos/forcefields/mol2files/y6.mol2"
-sdf_file = "/Users/madilyn/Projects/repos/forcefields/sdf_files/y6.sdf"
-xml_filename = "/Users/madilyn/Projects/repos/forcefields/xml_files/y6.xml"
-typed_mol2 = "/Users/madilyn/Projects/repos/forcefields/mol2files/y6_typed.mol2"
+mol2_file = "/Users/madilyn/Projects/repos/forcefields/mol2files/PCPDTPT_HD.mol2"
+sdf_file = "/Users/madilyn/Projects/repos/forcefields/sdf_files/PCPDTPT_HD.sdf"
+xml_filename = "/Users/madilyn/Projects/repos/forcefields/xml_files/PCPDTPT_HD.xml"
+typed_mol2 = "/Users/madilyn/Projects/repos/forcefields/mol2files/PCPDTPT_HD_typed.mol2"
 
 
 #using functions from bond_walker.py
