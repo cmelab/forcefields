@@ -86,3 +86,13 @@ class test_ene_HD(mb.Compound):
         self.add(mb.Port(anchor=carbon1, orientation=[1, 0, 1], separation=0.08), "p1")
         H1 = list(self.particles_by_name('H'))[1]
         self.remove(H1)
+
+
+class C16(mb.Compound):
+    def __init__(self):
+        super(C16, self).__init__()
+        self.add(mb.load("CCCCCCCCCCCCCCCC",smiles=True))
+        carbon1 = list(self.particles_by_name('C'))[0]
+        self.add(mb.Port(anchor=carbon1, orientation=[1, 1, 1], separation=0.08), "p1")
+        H1 = list(self.particles_by_name('H'))[0]
+        self.remove(H1)

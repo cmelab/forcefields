@@ -2,7 +2,7 @@ import mbuild as mb
 import warnings 
 import numpy
 from frag_classes import IDT, CPDT, DPP, BT, PT, FBT, thiophene, pyridine, ene_CPDT
-from r_classes import c11_bo,HD,ODD,C1BO,C3BO,C4BO,C5BO, ene_HD
+from r_classes import c11_bo,HD,ODD,C1BO,C3BO,C4BO,C5BO, ene_HD, C16
 import ipywidgets as widgets
 warnings.filterwarnings('ignore')
 
@@ -51,6 +51,8 @@ class PIDTCPDT_C11BO(mb.Compound):
         self.orientations = [[-1,0,0],[1,0,0]]
         self.separation = 0.14
         self.replace = False
+        if energy_minimize == True:
+            self.energy_minimize()
 
 
 
@@ -375,5 +377,114 @@ class PCPDTPT_ene_HD(mb.Compound):
                         from_positions=r2['p1'])
         self.bond_indices = [5,16]
         self.orientations = [[-1,0,0],[1,0,0]]
+        self.separation = 0.14
+        self.replace = False
+
+
+class PCPDTPT_C16(mb.Compound):
+    def __init__(self):
+        super(PCPDTPT_C16,self).__init__()
+        cpdt = CPDT()
+        pt = PT()
+        r1 = C16()
+        r2 = C16()
+        self.add([cpdt,pt,r1,r2])
+        mb.force_overlap(move_this=pt,
+                         to_positions=cpdt['p1'],
+                         from_positions=pt['p1'])
+        mb.force_overlap(move_this=r1,
+                        to_positions=cpdt['p3'],
+                        from_positions=r1['p1'])
+        mb.force_overlap(move_this=r2,
+                        to_positions=cpdt['p4'],
+                        from_positions=r2['p1'])
+        self.bond_indices = [4,15]
+        self.orientations = [[1,0,0],[-1,0,0]]
+        self.separation = 0.14
+        self.replace = False
+
+
+class PIDTBT_nC16(mb.Compound):
+    def __init__(self):
+        super(PIDTBT_nC16,self).__init__()
+        idt = IDT()
+        bt = BT()
+        r1 = C16()
+        r2 = C16()
+        r3 = C16()
+        r4 = C16()
+        self.add([idt,bt,r1,r2,r3,r4])
+        mb.force_overlap(move_this=bt,
+                         to_positions=idt['p1'],
+                         from_positions=bt['p1'])
+        mb.force_overlap(move_this=r1,
+                        to_positions=idt['p3'],
+                        from_positions=r1['p1'])
+        mb.force_overlap(move_this=r2,
+                        to_positions=idt['p4'],
+                        from_positions=r2['p1'])
+        mb.force_overlap(move_this=r3,
+                        to_positions=idt['p5'],
+                        from_positions=r3['p1'])
+        mb.force_overlap(move_this=r4,
+                        to_positions=idt['p6'],
+                        from_positions=r4['p1'])
+        self.bond_indices = [13,30]
+        self.orientations = [[1,0,0],[-1,0,0]]
+        self.separation = 0.14
+        self.replace = False
+
+
+class PIDTFBT_C11_BO(mb.Compound):
+    def __init__(self):
+        super(PIDTFBT_C11_BO,self).__init__()
+        idt1 = IDT()
+        fbt1 = FBT()
+        idt2 = IDT()
+        fbt2 = FBT()
+        r1 = c11_bo()
+        r2 = c11_bo()
+        r3 = c11_bo()
+        r4 = c11_bo()
+        r5 = c11_bo()
+        r6 = c11_bo()
+        r7 = c11_bo()
+        r8 = c11_bo()
+        self.add([idt1,fbt1,idt2,fbt2,r1,r2,r3,r4,r5,r6,r7,r8])
+        mb.force_overlap(move_this=fbt1,
+                         to_positions=idt1['p1'],
+                         from_positions=fbt1['p1'])
+        mb.force_overlap(move_this=idt2,
+                         to_positions=fbt1['p2'],
+                         from_positions=idt2['p1'])
+        mb.force_overlap(move_this=fbt2,
+                         to_positions=idt2['p2'],
+                         from_positions=fbt2['p2'])
+        mb.force_overlap(move_this=r1,
+                         to_positions=idt1['p3'],
+                         from_positions=r1['p1'])
+        mb.force_overlap(move_this=r2,
+                         to_positions=idt1['p4'],
+                         from_positions=r2['p1'])
+        mb.force_overlap(move_this=r3,
+                         to_positions=idt1['p5'],
+                         from_positions=r3['p1'])
+        mb.force_overlap(move_this=r4,
+                         to_positions=idt1['p6'],
+                         from_positions=r4['p1'])
+        mb.force_overlap(move_this=r5,
+                         to_positions=idt2['p3'],
+                         from_positions=r5['p1'])
+        mb.force_overlap(move_this=r6,
+                         to_positions=idt2['p4'],
+                         from_positions=r6['p1'])
+        mb.force_overlap(move_this=r7,
+                         to_positions=idt2['p5'],
+                         from_positions=r7['p1'])
+        mb.force_overlap(move_this=r8,
+                         to_positions=idt2['p6'],
+                         from_positions=r8['p1'])
+        self.bond_indices = [13,58]
+        self.orientations = [[1,0,0],[-1,0,0]]
         self.separation = 0.14
         self.replace = False
