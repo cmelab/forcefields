@@ -1,4 +1,4 @@
-name: ff2
+name: forcefield
 channels:
   - conda-forge
   - dglteam
