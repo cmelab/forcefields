@@ -84,10 +84,10 @@ CONECT    3    4   39   40
 CONECT    4    5   41   42
 CONECT    5    6   43   44
 CONECT    6    7   45   46
-CONECT    7    8    8   11
+CONECT    7    8   11
 CONECT    8    9   47
 CONECT    9   10
-CONECT   10   11   11   48
+CONECT   10   11   48
 CONECT   11   49
 CONECT   12   13   50   51   52
 CONECT   13   14   53   54
@@ -95,10 +95,10 @@ CONECT   14   15   55   56
 CONECT   15   16   57   58
 CONECT   16   17   59   60
 CONECT   17   18   61   62
-CONECT   18   19   19   22
+CONECT   18   19   22
 CONECT   19   20   63
 CONECT   20   21
-CONECT   21   22   22   30
+CONECT   21   22   30
 CONECT   22   64
 CONECT   23   24   65   66   67
 CONECT   24   25   68   69
@@ -106,9 +106,9 @@ CONECT   25   26   70   71
 CONECT   26   27   72   73
 CONECT   27   28   74   75
 CONECT   28   29   76   77
-CONECT   29   30   30   33
+CONECT   29   30   33
 CONECT   30   31
 CONECT   31   32
-CONECT   32   33   33   78
+CONECT   32   33   78
 CONECT   33   79
 END
