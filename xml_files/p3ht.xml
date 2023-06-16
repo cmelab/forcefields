@@ -1,11 +1,11 @@
 <ForceField name="" version="" combining_rule="geometric">
 	<AtomTypes>
-		<Type name="H3" class="H3" element="_H3" mass="1.008" def="_H3" desc=""/>
-		<Type name="C1" class="C1" element="_C1" mass="12.011" def="_C1" desc=""/>
-		<Type name="H5" class="H5" element="_H5" mass="1.008" def="_H5" desc=""/>
-		<Type name="S2" class="S2" element="_S2" mass="32.06" def="_S2" desc=""/>
 		<Type name="C0" class="C0" element="_C0" mass="12.011" def="_C0" desc=""/>
+		<Type name="C1" class="C1" element="_C1" mass="12.011" def="_C1" desc=""/>
+		<Type name="S2" class="S2" element="_S2" mass="32.06" def="_S2" desc=""/>
+		<Type name="H5" class="H5" element="_H5" mass="1.008" def="_H5" desc=""/>
 		<Type name="H4" class="H4" element="_H4" mass="1.008" def="_H4" desc=""/>
+		<Type name="H3" class="H3" element="_H3" mass="1.008" def="_H3" desc=""/>
 	</AtomTypes>
 <HarmonicBondForce>
 		<Bond class1="C0" class2="C0" length="0.15050985108746945" k="248129.60897470606"/>
