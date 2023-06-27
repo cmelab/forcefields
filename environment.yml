@@ -1,10 +1,9 @@
-name: forcefield2
+name: ff4
 channels:
   - openeye
   - dglteam
   - conda-forge
   - defaults
-  - anaconda
 dependencies:
   - alabaster=0.7.12=pyhd3eb1b0_0
   - ambertools=22.0=py39h59419a8_3
@@ -363,3 +362,4 @@ dependencies:
       - pdb4amber==22.0
       - pytraj==2.0.6
       - sander==22.0
+prefix: /Users/madilyn/miniconda3/envs/ff4
