@@ -1,4 +1,4 @@
-name: ff3
+name: forcefield
 channels:
   - conda-forge
   - dglteam
