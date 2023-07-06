@@ -158,3 +158,33 @@ class ene_CPDT(mb.Compound):
         self.remove(hydrogen2)
         self.remove(hydrogen3)
         self.remove(hydrogen4)
+
+
+
+class TPD(mb.Compound):
+    def __init__(self):
+        super(TPD, self).__init__()
+        self.add(mb.load('C1(=O)C2=CSC=C2C(=O)N1(CCCCCCCC)',smiles=True))
+        carbon1 = list(self.particles_by_name('C'))[2]
+        carbon2 = list(self.particles_by_name('C'))[3]
+        self.add(mb.Port(anchor=carbon1, orientation=[1,1,-10], separation=0.08), "p1")
+        self.add(mb.Port(anchor=carbon2, orientation=[-1,-1,10], separation=0.08), "p2")
+        H1 = list(self.particles_by_name('H'))[0]
+        H2 = list(self.particles_by_name('H'))[1]
+        self.remove(H1)
+        self.remove(H2)
+        
+        
+        
+class BDT(mb.Compound):
+    def __init__(self):
+        super(BDT, self).__init__()
+        self.add(mb.load('s1c2c(OCC(CC)CCCC)c3ccsc3c(OCC(CC)CCCC)c2cc1',smiles=True))
+        carbon1 = list(self.particles_by_name('C'))[25]
+        carbon2 = list(self.particles_by_name('C'))[12]
+        self.add(mb.Port(anchor=carbon1, orientation=[0,0,1], separation=0.08), "p1")
+        self.add(mb.Port(anchor=carbon2, orientation=[-1,-1,10], separation=0.08), "p2")
+        H1 = list(self.particles_by_name('H'))[18]
+        H2 = list(self.particles_by_name('H'))[37]
+        self.remove(H1)
+        self.remove(H2)
