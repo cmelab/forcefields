@@ -358,29 +358,6 @@ class PCPDTFBT_C11_BO(mb.Compound):
         self.replace = False
 
 
-class PCPDTPT_ene_HD(mb.Compound):
-    def __init__(self):
-        super(PCPDTPT_ene_HD,self).__init__()
-        cpdt=CPDT()
-        pt=PT()
-        r1=ene_HD()
-        self.add([cpdt,pt,r1])
-        mb.force_overlap(move_this=pt,
-                        to_positions=cpdt['p2'],
-                        from_positions=pt['p1'])
-        mb.force_overlap(move_this=r1,
-                        to_positions=cpdt['p3'],
-                        from_positions=r1['p1'])
-        mb.force_overlap(move_this=r1,
-                        to_positions=cpdt['p4'],
-                        from_positions=r1['p2'])
-        r1.translate([1,1,1])
-        self.bond_indices = [9,15]
-        self.orientations = [[-1,0,0],[1,0,0]]
-        self.separation = 0.14
-        self.replace = False
-
-
 
 class PCPDTPT_nC16(mb.Compound):
     def __init__(self):
