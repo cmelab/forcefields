@@ -1,10 +1,10 @@
 import mbuild as mb
-import warnings 
-import numpy
+#import warnings 
+#import numpy
 from frag_classes import IDT, CPDT, DPP, BT, PT, FBT, thiophene, pyridine, TPD,BDT
 from r_classes import c11_bo,HD,ODD,C1BO,C3BO,C4BO,C5BO, C16, ene_HD, ene_ODD
-import ipywidgets as widgets
-warnings.filterwarnings('ignore')
+#import ipywidgets as widgets
+#warnings.filterwarnings('ignore')
 
 
 class PIDTCPDT_C11BO(mb.Compound):
