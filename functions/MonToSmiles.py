@@ -21,7 +21,7 @@ def build_chain(monomer, length, min_energy):
 
 def mon_to_smiles(fragment):
     monomer = build_chain(fragment,1,min_energy=True)
-    dimer = build_chain(fragment,2,min_energy=True)
+    dimer = build_chain(fragment,15,min_energy=True)
     mon_dim = mb.Compound()
     mon_dim.add([monomer,dimer])
     monomer.translate([3,3,3])
