@@ -1,10 +1,10 @@
 import mbuild as mb
-import warnings 
-import numpy
-from frag_classes import IDT, CPDT, DPP, BT, PT, FBT, thiophene, pyridine, ene_CPDT, TPD,BDT
-from r_classes import c11_bo,HD,ODD,C1BO,C3BO,C4BO,C5BO,ene_ODD, ene_HD, C16
-import ipywidgets as widgets
-warnings.filterwarnings('ignore')
+#import warnings 
+#import numpy
+from frag_classes import IDT, CPDT, DPP, BT, PT, FBT, thiophene, pyridine, TPD,BDT
+from r_classes import c11_bo,HD,ODD,C1BO,C3BO,C4BO,C5BO, C16, ene_HD, ene_ODD
+#import ipywidgets as widgets
+#warnings.filterwarnings('ignore')
 
 
 class PIDTCPDT_C11BO(mb.Compound):
@@ -358,29 +358,6 @@ class PCPDTFBT_C11_BO(mb.Compound):
         self.replace = False
 
 
-class PCPDTPT_ene_HD(mb.Compound):
-    def __init__(self):
-        super(PCPDTPT_ene_HD,self).__init__()
-        cpdt=CPDT()
-        pt=PT()
-        r1=ene_HD()
-        self.add([cpdt,pt,r1])
-        mb.force_overlap(move_this=pt,
-                        to_positions=cpdt['p2'],
-                        from_positions=pt['p1'])
-        mb.force_overlap(move_this=r1,
-                        to_positions=cpdt['p3'],
-                        from_positions=r1['p1'])
-        mb.force_overlap(move_this=r1,
-                        to_positions=cpdt['p4'],
-                        from_positions=r1['p2'])
-        r1.translate([1,1,1])
-        self.bond_indices = [9,15]
-        self.orientations = [[-1,0,0],[1,0,0]]
-        self.separation = 0.14
-        self.replace = False
-
-
 
 class PCPDTPT_nC16(mb.Compound):
     def __init__(self):
@@ -491,27 +468,6 @@ class PIDTFBT_C11_BO(mb.Compound):
         self.replace = False
 
 
-class PCPDTPT_ene_ODD(mb.Compound):
-    def __init__(self):
-        super(PCPDTPT_ene_ODD,self).__init__()
-        cpdt=ene_CPDT()
-        pt=PT()
-        r1=ene_ODD()
-        r2=ene_ODD()
-        self.add([cpdt,pt,r1,r2])
-        mb.force_overlap(move_this=pt,
-                        to_positions=cpdt['p2'],
-                        from_positions=pt['p1'])
-        mb.force_overlap(move_this=r1,
-                        to_positions=cpdt['p3'],
-                        from_positions=r1['p1'])
-        mb.force_overlap(move_this=r2,
-                        to_positions=cpdt['p4'],
-                        from_positions=r2['p1'])
-        self.bond_indices = [5,16]
-        self.orientations = [[-1,0,0],[1,0,0]]
-        self.separation = 0.14
-        self.replace = False
 
 class BDT_TPD(mb.Compound):
     def __init__(self):
@@ -532,3 +488,49 @@ class perylene(mb.Compound):
     def __init__(self):
         super(perylene,self).__init__()
         self.add(mb.load('c1cc2cccc3c4cccc5cccc(c(c1)c23)c45',smiles=True))
+
+
+
+class PCPDTPT_eneODD(mb.Compound):
+    def __init__(self):
+        super(PCPDTPT_eneODD,self).__init__()
+        cpdt = CPDT()
+        pt = PT()
+        r = ene_ODD()
+        self.add([cpdt,pt,r])
+        mb.force_overlap(move_this=pt,
+                        to_positions=cpdt['p2'],
+                        from_positions=pt['p2'])
+        mb.force_overlap(move_this=r,
+                        to_positions=cpdt['p3'],
+                        from_positions=r['p1'])
+        mb.force_overlap(move_this=r,
+                        to_positions=cpdt['p4'],
+                        from_positions=r['p2'])
+        self.bond_indices = [9,21]
+        self.orientations = [[-1,0,0],[1,0,0]]
+        self.separation = 0.14
+        self.replace = False
+        r.translate([1,1,1])
+
+        
+class PCPDT_PT_eneHD(mb.Compound):
+    def __init__(self):
+        super(PCPDT_PT_eneHD,self).__init__()
+        cpdt = CPDT()
+        pt = PT()
+        r = ene_HD()
+        self.add([cpdt,pt,r])
+        mb.force_overlap(move_this=pt,
+                        to_positions=cpdt['p2'],
+                        from_positions=pt['p2'])
+        mb.force_overlap(move_this=r,
+                        to_positions=cpdt['p3'],
+                        from_positions=r['p1'])
+        mb.force_overlap(move_this=r,
+                        to_positions=cpdt['p4'],
+                        from_positions=r['p2'])
+        self.bond_indices = [9,21]
+        self.orientations = [[-1,0,0],[1,0,0]]
+        self.separation = 0.14
+        self.replace = False

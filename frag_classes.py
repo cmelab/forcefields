@@ -139,26 +139,18 @@ class pyridine(mb.Compound):
         self.remove(H2)
 
 
-class ene_CPDT(mb.Compound):
+class CPDT_eneHD(mb.Compound):
     def __init__(self):
-        super(ene_CPDT, self).__init__()
-        self.add(mb.load("C1(=C)C3=C(SC=C3)C2=C1C=CS2", smiles=True))
-        carbon1 = list(self.particles_by_name('C'))[4]
-        carbon2 = list(self.particles_by_name('C'))[9]
-        carbon3 = list(self.particles_by_name('C'))[1]
-        self.add(mb.Port(anchor=carbon1, orientation=[10, 1, 1], separation=0.08), "p1")
-        self.add(mb.Port(anchor=carbon2, orientation=[-10, -1, -1], separation=0.08), "p2")
-        self.add(mb.Port(anchor=carbon3, orientation=[-10, -1, -1], separation=0.08), "p3")
-        self.add(mb.Port(anchor=carbon3, orientation=[10, 1, 1], separation=0.08), "p4")
-        hydrogen1 = list(self.particles_by_name('H'))[2]
-        hydrogen2 = list(self.particles_by_name('H'))[5]
-        hydrogen3 = list(self.particles_by_name('H'))[0]
-        hydrogen4 = list(self.particles_by_name('H'))[1]
+        super(CPDT_eneHD, self).__init__()
+        self.add(mb.load('C1(=C(CC(CCCCCC)CCCCCCCC)CC(CCCCCC)CCCCCCCC)C3=C(SC=C3)C2=C1C=CS2', smiles=True))
+        carbon1 = self[37]
+        carbon2 = self[42]
+        self.add(mb.Port(anchor=carbon1, orientation=[1,1,1], separation=0.08), "p1")
+        self.add(mb.Port(anchor=carbon2, orientation=[-1,-1,-1], separation=0.08), "p2")
+        hydrogen1 = self[110]
+        hydrogen2 = self[113]
         self.remove(hydrogen1)
         self.remove(hydrogen2)
-        self.remove(hydrogen3)
-        self.remove(hydrogen4)
-
 
 
 class TPD(mb.Compound):
