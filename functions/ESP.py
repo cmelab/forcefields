@@ -15,13 +15,8 @@ if not os.path.exists("espaloma_model.pt"):
 
 
 
-def espaloma(SMILES,XML_FILEPATH,TYPED_FILEPATH):
-    comp = Molecule.from_smiles(SMILES)
-    bonds = [b for b in comp.bonds]
-    for i in range(len(bonds)):
-        bonds[i].bond_order = 1
-    b= BondWalker(comp)
-    molecule = b.fill_in_bonds()
+def espaloma(sdf_filepath,XML_FILEPATH,TYPED_FILEPATH):
+    molecule = Molecule.from_file(sdf_filepath)
     molecule_graph = esp.Graph(molecule)
     espaloma_model = esp.get_model("latest")
     espaloma_model(molecule_graph.heterograph)
@@ -147,7 +142,7 @@ def espaloma(SMILES,XML_FILEPATH,TYPED_FILEPATH):
     test = mb.load('intermediate.mol2')
     
     for index in type_map:
-       #print(index, type_map[index],comp_rename[index].name)
+        #print(index, type_map[index],test[index].name)
         test[index].name = type_map[index]
     
     os.system('rm intermediate.mol2')

@@ -1,6 +1,12 @@
-import espaloma as esp
+import warnings 
+warnings.filterwarnings('ignore')
 import mbuild as mb
-from openff.toolkit.topology import Molecule
+import numpy
+from frag_classes import IDT, CPDT, DPP, BT, PT, FBT, thiophene, pyridine, CPDT_eneHD 
+from r_classes import c11_bo,HD,ODD,C1BO,C3BO,C4BO,C5BO, C16
+from mon_classes import PCPDTPT_nC16,PIDTBT_nC16, PCPDTPT_ODD,PIDTCPDT_C11BO, P3HT, PCPDTPT_HD, PDPPPyT_ODD, PCPDTFBT_C1_BO, PCPDTFBT_C3_BO, PCPDTFBT_C4_BO, PCPDTFBT_C5_BO, PIDTFBT_C11_BO,PCPDT_PT_eneHD, PCPDTFBT_C11_BO, BDT_TPD, perylene
+from mbuild.lib.recipes.polymer import Polymer
+import espaloma as esp
 from writers import foyer_xml_writer
 from writers.foyer_xml_writer import mbuild_to_foyer_xml
 from bondwalk import bond_walk
@@ -13,10 +19,43 @@ import networkx  as nx
 if not os.path.exists("espaloma_model.pt"):
     os.system("wget http://data.wangyq.net/espaloma_model.pt")
 
+def build_chain(monomer, length, min_energy):
+    chain = Polymer()
+    chain.add_monomer(compound=monomer,
+                 indices=monomer.bond_indices,
+                 separation=monomer.separation,
+                 replace=monomer.replace,
+                 orientation=monomer.orientations)
+    chain.build(n=length)
+    if min_energy == True:
+        chain.energy_minimize()
+    return chain
+
+def get_aromatic_ids(compound):
+    aromatic_particle_indices = set()
+    for idx, p in enumerate(compound.particles()):
+        for bond in compound.bonds(return_bond_order=True):
+            if p in [bond[0], bond[1]] and bond[2]["bond_order"] == "aromatic":
+                aromatic_particle_indices.add(idx)
+    return aromatic_particle_indices
 
 
-def espaloma(SMILES,XML_FILEPATH,TYPED_FILEPATH):
-    comp = Molecule.from_smiles(SMILES)
+def fix_rdkit_aromaticity(rdmol, particle_indices):
+    for idx, a in enumerate(rdmol.GetAtoms()):
+        if idx in particle_indices:
+            a.SetIsAromatic(True)
+
+def espaloma(MONOMER,XML_FILEPATH,TYPED_FILEPATH,dimer):
+    #if you plan to parameterize a polymer made up of your monomer set dimer = True, if you are simulating only the monomer set dimer = False
+    if dimer == True:
+        mb_mol = build_chain(monomer=MONOMER,length=2,min_energy=True)
+    else:
+        mb_mol = build_chain(monomer=MONOMER,length=1,min_energy=True)
+    rdkit_mol = mb_mol.to_rdkit()
+    aromatic_indices =  get_aromatic_ids(mb_mol)
+    fix_rdkit_aromaticity(rdkit_mol,aromatic_indices)
+    from openff.toolkit.topology import Molecule
+    comp = Molecule.from_rdkit(rdkit_mol,allow_undefined_stereo=True,hydrogens_are_explicit=True)
     bonds = [b for b in comp.bonds]
     for i in range(len(bonds)):
         bonds[i].bond_order = 1
@@ -139,32 +178,14 @@ def espaloma(SMILES,XML_FILEPATH,TYPED_FILEPATH):
         epsilon = nonbonded_parms[2]/nonbonded_parms[2].unit
         nonbonded_types.append((charge,sigma,epsilon))
         nonbonded_dict[(type_map[i])]={'charge':charge,'sigma':sigma,'epsilon':epsilon}
-        
-    molecule.to_file('molecule.mol',file_format='mol')
-    os.system('obabel molecule.mol -O intermediate.mol2')
-    os.system('rm molecule.mol')
-    
-    test = mb.load('intermediate.mol2')
     
     for index in type_map:
-       #print(index, type_map[index],comp_rename[index].name)
-        test[index].name = type_map[index]
-    
-    os.system('rm intermediate.mol2')
-    
-    t1 = test.children[0]
-    t2 = test.children[1]
-    t3 = test.children[2]
-    t4 = test.children[3]
-    
-    test.remove(objs_to_remove=t2)
-    test.remove(objs_to_remove=t4)
-    
-    test.energy_minimize()
-    
+        #print(index, type_map[index],mb_mol[index].name)
+        mb_mol[index].name = type_map[index]
+        
     mbuild_to_foyer_xml(
         file_name=XML_FILEPATH,
-        compound=test,
+        compound=mb_mol,
         bond_params=bond_dict,
         angle_params=angle_dict,
         dihedral_params=dihedral_dict,
@@ -176,6 +197,4 @@ def espaloma(SMILES,XML_FILEPATH,TYPED_FILEPATH):
         coulomb14scale=1.0,
         lj14scale=1.0)
     
-    test.save(TYPED_FILEPATH,overwrite=True)
-    
-    return test
+    mb_mol.save(TYPED_FILEPATH,overwrite=True)
