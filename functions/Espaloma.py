@@ -5,8 +5,8 @@ import mbuild as mb
 from openff.toolkit.topology import Molecule
 from writers import foyer_xml_writer
 from writers.foyer_xml_writer import mbuild_to_foyer_xml
-from bondwalk import bond_walk
-from bondwalk.bond_walk import MadAtom, MadBond, BondWalker
+import functions.bond_walk
+from functions.bond_walk import MadAtom, MadBond, BondWalker
 #import ipywidgets as widgets
 import os
 import torch
@@ -29,7 +29,6 @@ def build_chain(monomer, length, min_energy):
     if min_energy == True:
         chain.energy_minimize()
     return chain
-
 
 def espaloma(FRAGMENT,XML_FILEPATH,TYPED_FILEPATH):
     #create a monomer&dimer instance (mbuild compound):
@@ -207,3 +206,19 @@ def espaloma(FRAGMENT,XML_FILEPATH,TYPED_FILEPATH):
     test.save(TYPED_FILEPATH,overwrite=True)
     
     return test 
+
+
+def build_polymer(monomer, length,bond_indices, separation,replace,orientations,min_energy):
+    chain = Polymer()
+    chain.add_monomer(compound=monomer,
+                 indices=bond_indices,
+                 separation=separation,
+                 replace=replace,
+                 orientation=orientations)
+    chain.build(n=length)
+    if chain[-2].name == 'H' and chain[-1].name == 'H':
+        chain[-2].name = monomer[bond_indices[0]].name
+        chain[-1].name = monomer[bond_indices[1]].name
+    if min_energy == True:
+        chain.energy_minimize()
+    return chain
