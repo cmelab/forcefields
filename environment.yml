@@ -4,12 +4,13 @@ channels:
   - pip
   - defaults
 dependencies:
-  - espaloma
+  - espaloma = 0.3.2
   - mbuild
   - foyer
   - openbabel
   - py3dmol
+  - python = 3.10.14
+  - pip
   - pip:
       - notebook
-      - dgl
 prefix: /Users/madilyn/miniconda3/envs/espaloma_test

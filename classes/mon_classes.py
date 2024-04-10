@@ -408,7 +408,7 @@ class PIDTBT_nC16(mb.Compound):
                         to_positions=idt['p6'],
                         from_positions=r4['p1'])
         self.bond_indices = [13,30]
-        self.orientations = [[1,0,0],[-1,0,0]]
+        self.orientations = [[-1,0,0],[1,0,0]]
         self.separation = 0.14
         self.replace = False
 
