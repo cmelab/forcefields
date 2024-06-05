@@ -1,13 +1,16 @@
-name: forcefield
+name: espaloma_test
 channels:
   - conda-forge
+  - pip
   - defaults
 dependencies:
-  - espaloma=0.3.2
+  - espaloma = 0.3.2
   - mbuild
   - foyer
   - openbabel
   - py3dmol
+  - python = 3.10.14
+  - pip
   - pip:
       - notebook
-prefix: /Users/madilyn/miniconda3/envs/forcefield
+prefix: /Users/madilyn/miniconda3/envs/espaloma_test
