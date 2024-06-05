@@ -1,0 +1,97 @@
+<ForceField name="" version="" combining_rule="geometric">
+	<AtomTypes>
+		<Type name="C0" class="C0" element="_C0" mass="12.011" def="_C0" desc=""/>
+		<Type name="H2" class="H2" element="_H2" mass="1.008" def="_H2" desc=""/>
+		<Type name="N3" class="N3" element="_N3" mass="14.007" def="_N3" desc=""/>
+		<Type name="S1" class="S1" element="_S1" mass="32.06" def="_S1" desc=""/>
+		<Type name="H6" class="H6" element="_H6" mass="1.008" def="_H6" desc=""/>
+		<Type name="H4" class="H4" element="_H4" mass="1.008" def="_H4" desc=""/>
+		<Type name="C5" class="C5" element="_C5" mass="12.011" def="_C5" desc=""/>
+	</AtomTypes>
+<HarmonicBondForce>
+		<Bond class1="C0" class2="C0" length="0.14286739033235799" k="382843.5995809838"/>
+		<Bond class1="C0" class2="S1" length="0.17626027873005887" k="157781.58986870374"/>
+		<Bond class1="S1" class2="C0" length="0.17644217178906432" k="147899.24808921883"/>
+		<Bond class1="C0" class2="H2" length="0.10844604978803231" k="335782.2585247686"/>
+		<Bond class1="C0" class2="H4" length="0.10894117437758703" k="330036.5702930849"/>
+		<Bond class1="N3" class2="C0" length="0.13369315207195046" k="500059.46199332597"/>
+		<Bond class1="C0" class2="N3" length="0.1342150868682324" k="517185.14928213134"/>
+		<Bond class1="N3" class2="S1" length="0.16567486473664028" k="144431.4178218735"/>
+		<Bond class1="S1" class2="N3" length="0.16512638468155638" k="132162.09001480573"/>
+		<Bond class1="C5" class2="C5" length="0.15363183342387515" k="221138.69447272923"/>
+		<Bond class1="C5" class2="H6" length="0.10963632203417877" k="307676.9272909058"/>
+		<Bond class1="C5" class2="C0" length="0.1492961246416496" k="209048.71334955207"/>
+		<Bond class1="C0" class2="C5" length="0.1492961246416496" k="209048.71334955207"/>
+</HarmonicBondForce>
+<HarmonicAngleForce>
+		<Angle class1="C0" class2="C0" class3="C0" angle="2.3906140327453613" k="400.0405880154322"/>
+		<Angle class1="C0" class2="C0" class3="C5" angle="2.3528366088867188" k="419.0458730902239"/>
+		<Angle class1="C0" class2="C0" class3="S1" angle="2.265113115310669" k="598.9037021260704"/>
+		<Angle class1="C0" class2="C0" class3="H2" angle="2.3082430362701416" k="242.96444967123082"/>
+		<Angle class1="C0" class2="S1" class3="C0" angle="1.7328013181686401" k="1120.041691433855"/>
+		<Angle class1="S1" class2="C0" class3="C0" angle="2.233837366104126" k="445.9705909693329"/>
+		<Angle class1="C0" class2="C0" class3="H4" angle="2.4536216259002686" k="236.19114451837228"/>
+		<Angle class1="S1" class2="C0" class3="H4" angle="2.2209949493408203" k="267.29370904901975"/>
+		<Angle class1="N3" class2="C0" class3="C0" angle="2.2839832305908203" k="460.08194168394573"/>
+		<Angle class1="N3" class2="C0" class3="H4" angle="2.288665771484375" k="330.27239749617485"/>
+		<Angle class1="C0" class2="N3" class3="C0" angle="1.9650131464004517" k="438.30201479832635"/>
+		<Angle class1="C0" class2="C0" class3="N3" angle="2.251293897628784" k="767.9825596512192"/>
+		<Angle class1="C0" class2="N3" class3="S1" angle="2.0754902362823486" k="736.6088140922197"/>
+		<Angle class1="N3" class2="S1" class3="N3" angle="1.8262969255447388" k="1683.5497260393531"/>
+		<Angle class1="S1" class2="N3" class3="C0" angle="2.0664966106414795" k="780.2408889091685"/>
+		<Angle class1="C5" class2="C5" class3="C5" angle="1.9757330417633057" k="586.4610253234923"/>
+		<Angle class1="C5" class2="C5" class3="H6" angle="1.9348560571670532" k="427.5123627104462"/>
+		<Angle class1="C5" class2="C5" class3="C0" angle="1.9405769109725952" k="475.95852185816216"/>
+		<Angle class1="C5" class2="C0" class3="C5" angle="2.314727544784546" k="446.2958595359806"/>
+		<Angle class1="C0" class2="C5" class3="H6" angle="1.9051555395126343" k="362.25986545173464"/>
+		<Angle class1="C0" class2="C5" class3="C5" angle="1.9405769109725952" k="475.95852185816216"/>
+		<Angle class1="H6" class2="C5" class3="H6" angle="1.8736820220947266" k="337.3011562340618"/>
+</HarmonicAngleForce>
+<PeriodicTorsionForce>
+		<Proper class1="C0" class2="C0" class3="C0" class4="S1" periodicity1="1" k1="0.483734264466088" phase1="3.141592653589793" periodicity2="2" k2="3.999546665864913" phase2="3.141592653589793" periodicity3="3" k3="0.4370905251565765" phase3="0.0" periodicity4="4" k4="0.36869061914998813" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C0" class3="C0" class4="C0" periodicity1="1" k1="0.1579387982078599" phase1="3.141592653589793" periodicity2="2" k2="1.9072954404744908" phase2="3.141592653589793" periodicity3="3" k3="0.008375587192367334" phase3="3.141592653589793" periodicity4="4" k4="0.04981497503010309" phase4="0.0"/>
+		<Proper class1="C0" class2="C0" class3="C0" class4="H2" periodicity1="1" k1="0.7269002495132572" phase1="3.141592653589793" periodicity2="2" k2="2.611702796063504" phase2="3.141592653589793" periodicity3="3" k3="0.9577084118626269" phase3="0.0" periodicity4="4" k4="1.1001371209550204" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C0" class3="C5" class4="C5" periodicity1="1" k1="0.3510234929660466" phase1="3.141592653589793" periodicity2="2" k2="2.4209378579330156" phase2="3.141592653589793" periodicity3="3" k3="0.12156954399462314" phase3="0.0" periodicity4="4" k4="0.00042408713486258146" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C0" class3="C5" class4="H6" periodicity1="1" k1="0.28945582173233536" phase1="3.141592653589793" periodicity2="2" k2="2.358131088144542" phase2="3.141592653589793" periodicity3="3" k3="0.47088492095837825" phase3="0.0" periodicity4="4" k4="0.2298968716880417" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C0" class3="C0" class4="C5" periodicity1="1" k1="0.5655642077067624" phase1="3.141592653589793" periodicity2="2" k2="7.6904385887236355" phase2="3.141592653589793" periodicity3="3" k3="0.8815650568339297" phase3="0.0" periodicity4="4" k4="0.808140597018328" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C0" class3="S1" class4="C0" periodicity1="1" k1="0.5877459897806293" phase1="3.141592653589793" periodicity2="2" k2="2.3022744569936466" phase2="3.141592653589793" periodicity3="3" k3="0.3595861560733558" phase3="0.0" periodicity4="4" k4="2.7168024386001366" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="S1" class3="C0" class4="C0" periodicity1="1" k1="0.3403033343176843" phase1="3.141592653589793" periodicity2="2" k2="2.2203159121947786" phase2="3.141592653589793" periodicity3="3" k3="0.6783077343039315" phase3="0.0" periodicity4="4" k4="1.8203270129891131" phase4="3.141592653589793"/>
+		<Proper class1="S1" class2="C0" class3="C0" class4="C0" periodicity1="1" k1="1.2693948812044589" phase1="3.141592653589793" periodicity2="2" k2="4.391178832562991" phase2="3.141592653589793" periodicity3="3" k3="0.5979792123448634" phase3="0.0" periodicity4="4" k4="0.698297215126848" phase4="3.141592653589793"/>
+		<Proper class1="S1" class2="C0" class3="C0" class4="S1" periodicity1="1" k1="0.6077992364979679" phase1="3.141592653589793" periodicity2="2" k2="2.2962366787867454" phase2="3.141592653589793" periodicity3="3" k3="0.6921745430808779" phase3="0.0" periodicity4="4" k4="0.8309154515781834" phase4="3.141592653589793"/>
+		<Proper class1="S1" class2="C0" class3="C0" class4="H2" periodicity1="1" k1="0.7624980472015258" phase1="3.141592653589793" periodicity2="2" k2="2.3170456793432477" phase2="3.141592653589793" periodicity3="3" k3="0.8952717058568811" phase3="0.0" periodicity4="4" k4="1.3279453444008398" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C0" class3="C0" class4="N3" periodicity1="1" k1="0.5175389759008999" phase1="3.141592653589793" periodicity2="2" k2="2.744422049306243" phase2="3.141592653589793" periodicity3="3" k3="0.5280955362509306" phase3="0.0" periodicity4="4" k4="0.7776365824983853" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C0" class3="C0" class4="H4" periodicity1="1" k1="0.5313916102339693" phase1="3.141592653589793" periodicity2="2" k2="3.398400477773831" phase2="3.141592653589793" periodicity3="3" k3="0.841990773650481" phase3="0.0" periodicity4="4" k4="0.7973509797743639" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="S1" class3="C0" class4="H4" periodicity1="1" k1="0.2767698854927163" phase1="3.141592653589793" periodicity2="2" k2="1.0464234670468677" phase2="3.141592653589793" periodicity3="3" k3="0.3374670701245619" phase3="0.0" periodicity4="4" k4="2.0042555136814237" phase4="3.141592653589793"/>
+		<Proper class1="H2" class2="C0" class3="C0" class4="C0" periodicity1="1" k1="0.601497110643669" phase1="3.141592653589793" periodicity2="2" k2="2.4458246664244867" phase2="3.141592653589793" periodicity3="3" k3="0.8420866708314274" phase3="0.0" periodicity4="4" k4="1.3422440343464785" phase4="3.141592653589793"/>
+		<Proper class1="H2" class2="C0" class3="C0" class4="H4" periodicity1="1" k1="0.6927791155873703" phase1="3.141592653589793" periodicity2="2" k2="1.8331514079473574" phase2="3.141592653589793" periodicity3="3" k3="0.7416836977982776" phase3="0.0" periodicity4="4" k4="1.1816693626682309" phase4="3.141592653589793"/>
+		<Proper class1="N3" class2="C0" class3="C0" class4="C0" periodicity1="1" k1="0.4259766531816593" phase1="3.141592653589793" periodicity2="2" k2="1.8524855022196944" phase2="3.141592653589793" periodicity3="3" k3="0.4682877502148027" phase3="0.0" periodicity4="4" k4="0.4792603362235287" phase4="3.141592653589793"/>
+		<Proper class1="N3" class2="C0" class3="C0" class4="N3" periodicity1="1" k1="0.6049036383120129" phase1="3.141592653589793" periodicity2="2" k2="2.4708581861409913" phase2="3.141592653589793" periodicity3="3" k3="0.719598615232369" phase3="0.0" periodicity4="4" k4="0.9126394876532866" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="N3" class3="C0" class4="C0" periodicity1="1" k1="0.14121371855403614" phase1="3.141592653589793" periodicity2="2" k2="5.4077482463816535" phase2="3.141592653589793" periodicity3="3" k3="1.1231224144282832" phase3="3.141592653589793" periodicity4="4" k4="4.839686050832405" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="N3" class3="C0" class4="H4" periodicity1="1" k1="0.4454506197964045" phase1="3.141592653589793" periodicity2="2" k2="3.912191440347702" phase2="3.141592653589793" periodicity3="3" k3="0.8693058057404498" phase3="3.141592653589793" periodicity4="4" k4="4.99853854668263" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C0" class3="N3" class4="C0" periodicity1="1" k1="0.06844823665754343" phase1="3.141592653589793" periodicity2="2" k2="5.225559190651146" phase2="3.141592653589793" periodicity3="3" k3="1.3811954061203056" phase3="3.141592653589793" periodicity4="4" k4="4.623180933918168" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C0" class3="N3" class4="S1" periodicity1="1" k1="0.8102500293507634" phase1="3.141592653589793" periodicity2="2" k2="4.357283037909304" phase2="3.141592653589793" periodicity3="3" k3="0.3141170999213655" phase3="3.141592653589793" periodicity4="4" k4="4.803147008941031" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="N3" class3="S1" class4="N3" periodicity1="1" k1="1.4421751626845334" phase1="3.141592653589793" periodicity2="2" k2="7.059866407968221" phase2="3.141592653589793" periodicity3="3" k3="0.4067543498063141" phase3="3.141592653589793" periodicity4="4" k4="4.933095559569334" phase4="3.141592653589793"/>
+		<Proper class1="N3" class2="S1" class3="N3" class4="C0" periodicity1="1" k1="1.9466602016896886" phase1="3.141592653589793" periodicity2="2" k2="6.86497277144658" phase2="3.141592653589793" periodicity3="3" k3="0.2946593326710511" phase3="3.141592653589793" periodicity4="4" k4="5.120478192666028" phase4="3.141592653589793"/>
+		<Proper class1="S1" class2="N3" class3="C0" class4="C0" periodicity1="1" k1="0.9398597687437547" phase1="3.141592653589793" periodicity2="2" k2="4.9381421200621025" phase2="3.141592653589793" periodicity3="3" k3="0.18473548884209173" phase3="3.141592653589793" periodicity4="4" k4="4.076266550160734" phase4="3.141592653589793"/>
+		<Proper class1="N3" class2="C0" class3="C0" class4="H4" periodicity1="1" k1="0.5679811987270937" phase1="3.141592653589793" periodicity2="2" k2="3.9614974153008493" phase2="3.141592653589793" periodicity3="3" k3="0.9737540351555141" phase3="0.0" periodicity4="4" k4="1.1947141301124111" phase4="3.141592653589793"/>
+		<Proper class1="C5" class2="C5" class3="C5" class4="C5" periodicity1="1" k1="0.1790498557813192" phase1="3.141592653589793" periodicity2="2" k2="1.2860689175779063" phase2="3.141592653589793" periodicity3="3" k3="0.4347041371808421" phase3="0.0" periodicity4="4" k4="0.1890910356443473" phase4="3.141592653589793"/>
+		<Proper class1="C5" class2="C5" class3="C5" class4="H6" periodicity1="1" k1="0.4848240537845403" phase1="3.141592653589793" periodicity2="2" k2="0.976518854038529" phase2="3.141592653589793" periodicity3="3" k3="0.687817066873189" phase3="0.0" periodicity4="4" k4="0.49894267862507935" phase4="3.141592653589793"/>
+		<Proper class1="C5" class2="C5" class3="C5" class4="C0" periodicity1="1" k1="0.2389619443289944" phase1="3.141592653589793" periodicity2="2" k2="0.7606656087184376" phase2="3.141592653589793" periodicity3="3" k3="0.38860303837371374" phase3="0.0" periodicity4="4" k4="0.25256541791882" phase4="3.141592653589793"/>
+		<Proper class1="C5" class2="C5" class3="C0" class4="C5" periodicity1="1" k1="0.6002376482652235" phase1="3.141592653589793" periodicity2="2" k2="2.726730815105896" phase2="3.141592653589793" periodicity3="3" k3="0.7117653819970234" phase3="0.0" periodicity4="4" k4="0.4392305605336087" phase4="3.141592653589793"/>
+		<Proper class1="C5" class2="C0" class3="C5" class4="C5" periodicity1="1" k1="0.6002374572349826" phase1="3.141592653589793" periodicity2="2" k2="2.7267305094575103" phase2="3.141592653589793" periodicity3="3" k3="0.7117652291728307" phase3="0.0" periodicity4="4" k4="0.43923048412151233" phase4="3.141592653589793"/>
+		<Proper class1="C5" class2="C0" class3="C5" class4="H6" periodicity1="1" k1="0.654167777642397" phase1="3.141592653589793" periodicity2="2" k2="2.6323447597773377" phase2="3.141592653589793" periodicity3="3" k3="0.9655369075479975" phase3="0.0" periodicity4="4" k4="0.7052147257992758" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C5" class3="C5" class4="H6" periodicity1="1" k1="0.4640955151655174" phase1="3.141592653589793" periodicity2="2" k2="0.49302257504659047" phase2="3.141592653589793" periodicity3="3" k3="0.5496115779351596" phase3="0.0" periodicity4="4" k4="0.49930078391472504" phase4="3.141592653589793"/>
+		<Proper class1="C0" class2="C5" class3="C5" class4="C5" periodicity1="1" k1="0.23896182971084984" phase1="3.141592653589793" periodicity2="2" k2="0.760665685130534" phase2="3.141592653589793" periodicity3="3" k3="0.388602885549521" phase3="0.0" periodicity4="4" k4="0.25256528419765134" phase4="3.141592653589793"/>
+		<Proper class1="H6" class2="C5" class3="C5" class4="H6" periodicity1="1" k1="0.7371633874132207" phase1="3.141592653589793" periodicity2="2" k2="0.5385181461960218" phase2="3.141592653589793" periodicity3="3" k3="0.8134263273727396" phase3="0.0" periodicity4="4" k4="0.8045883514822034" phase4="3.141592653589793"/>
+		<Proper class1="N3" class2="C0" class3="C0" class4="S1" periodicity1="1" k1="0.7774172797817988" phase1="3.141592653589793" periodicity2="2" k2="3.714211060781033" phase2="3.141592653589793" periodicity3="3" k3="0.2616970645987365" phase3="0.0" periodicity4="4" k4="0.22141658082062113" phase4="3.141592653589793"/>
+</PeriodicTorsionForce>
+	<NonbondedForce coulomb14scale="1.0" lj14scale="1.0">
+		<Atom type="C0" charge="-0.044014304876327515" sigma="0.34806468869450646" epsilon="0.3635030558377792"/>
+		<Atom type="S1" charge="0.49460649490356445" sigma="0.3563594872561357" epsilon="1.046"/>
+		<Atom type="H2" charge="0.1591101586818695" sigma="0.2572581535063279" epsilon="0.06531785996356952"/>
+		<Atom type="N3" charge="-0.5238720774650574" sigma="0.3206876023663901" epsilon="0.7016212989374017"/>
+		<Atom type="H4" charge="0.03552909195423126" sigma="0.24536265277299726" epsilon="0.05483968129296432"/>
+		<Atom type="C5" charge="-0.09267193078994751" sigma="0.337953176162662" epsilon="0.45538911611061844"/>
+		<Atom type="H6" charge="0.03557558357715607" sigma="0.26445434132681245" epsilon="0.06602135607582665"/>
+	</NonbondedForce>
+</ForceField>
