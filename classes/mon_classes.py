@@ -466,6 +466,7 @@ class PIDTFBT_C11_BO(mb.Compound):
         self.orientations = [[1,0,0],[-1,0,0]]
         self.separation = 0.14
         self.replace = False
+        self.energy_minimize()
 
 
 
@@ -512,6 +513,7 @@ class PCPDTPT_eneODD(mb.Compound):
         self.separation = 0.14
         self.replace = False
         r.translate([1,1,1])
+        self.energy_minimize()
 
         
 class PCPDT_PT_eneHD(mb.Compound):
@@ -534,3 +536,4 @@ class PCPDT_PT_eneHD(mb.Compound):
         self.orientations = [[-1,0,0],[1,0,0]]
         self.separation = 0.14
         self.replace = False
+        self.energy_minimize()
