@@ -49,8 +49,8 @@ def espaloma(MONOMER,XML_FILEPATH,TYPED_FILEPATH,DIMER):
     '''
     if DIMER == True:
         #mb_mol = build_chain(monomer=MONOMER,length=2,min_energy=False)
-        monomer = build_chain(monomer=MONOMER,length=1,min_energy=False)
-        dimer = build_chain(monomer=MONOMER,length=2,min_energy=False)
+        monomer = build_chain(monomer=MONOMER,length=1,min_energy=True)
+        dimer = build_chain(monomer=MONOMER,length=2,min_energy=True)
         mb_mol = mb.Compound()
         mb_mol.add([monomer,dimer])
         monomer.translate([1,1,1])
