@@ -10,14 +10,13 @@ This repo is designed to aid in the proccess of creating forcefield files from s
 CONDA_SUBDIR=osx-64 conda create -n ff_generation python
 ```
 ```
-conda install flowermd
 conda activate ff_generation
 conda env config vars set CONDA_SUBDIR=osx-64
 conda deactivate
 conda activate ff_generation
 ```
 ```
-conda install espaloma=0.3.2, mbuild, foyer, openbabel, py3dmol, python=3.10.14
+conda install 'espaloma=0.3.2' mbuild "python=3.10.14" foyer openbabel py3dmol
 ```
 ```
 pip install notebook
