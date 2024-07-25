@@ -1,4 +1,4 @@
-name: espaloma_test
+name: ff_generation
 channels:
   - conda-forge
   - pip
@@ -13,4 +13,4 @@ dependencies:
   - pip
   - pip:
       - notebook
-prefix: /Users/madilyn/miniconda3/envs/espaloma_test
+prefix: /Users/madilyn/miniconda3/envs/ff_generation
