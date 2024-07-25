@@ -1,22 +1,20 @@
 import warnings 
 warnings.filterwarnings('ignore')
-import espaloma as esp
 import mbuild as mb
-from openff.toolkit.topology import Molecule
+import numpy
+from mbuild.lib.recipes.polymer import Polymer
+import espaloma as esp
 from writers import foyer_xml_writer
 from writers.foyer_xml_writer import mbuild_to_foyer_xml
-import functions.bond_walk
+from functions import bond_walk
 from functions.bond_walk import MadAtom, MadBond, BondWalker
-#import ipywidgets as widgets
+import ipywidgets as widgets
 import os
 import torch
-from openff.toolkit.topology import Molecule
 import parmed as pmd
 import networkx  as nx
 if not os.path.exists("espaloma_model.pt"):
     os.system("wget http://data.wangyq.net/espaloma_model.pt")
-    
-from mbuild.lib.recipes.polymer import Polymer
 
 def build_chain(monomer, length, min_energy):
     chain = Polymer()
@@ -28,32 +26,51 @@ def build_chain(monomer, length, min_energy):
     chain.build(n=length)
     if min_energy == True:
         chain.energy_minimize()
+        chain.energy_minimize()
     return chain
 
-def espaloma(FRAGMENT,XML_FILEPATH,TYPED_FILEPATH):
-    #create a monomer&dimer instance (mbuild compound):
-    monomer = build_chain(FRAGMENT,1,min_energy=True)
-    dimer = build_chain(FRAGMENT,2,min_energy=True)
-    mon_dim = mb.Compound()
-    mon_dim.add([monomer,dimer])
-    monomer.translate([3,3,3])
-    dimer.translate([-3,-3,-3])
-    smiles_string = mon_dim.to_smiles()
+#def get_aromatic_ids(compound):
+#    aromatic_particle_indices = set()
+#    for idx, p in enumerate(compound.particles()):
+#        for bond in compound.bonds(return_bond_order=True):
+#            if p in [bond[0], bond[1]] and bond[2]["bond_order"] == "aromatic":
+#                aromatic_particle_indices.add(idx)
+#    return aromatic_particle_indices
+#
+#
+#def fix_rdkit_aromaticity(rdmol, particle_indices):
+#    for idx, a in enumerate(rdmol.GetAtoms()):
+#        if idx in particle_indices:
+#            a.SetIsAromatic(True)
 
-    #create openff molecule from smiles string:
-    comp = Molecule.from_smiles(smiles_string)
+def espaloma(MONOMER,XML_FILEPATH,TYPED_FILEPATH,DIMER):
+    '''if you plan to parameterize a polymer made up of your monomer set dimer = True, 
+    if you are simulating only the monomer set dimer = False
+    '''
+    if DIMER == True:
+        #mb_mol = build_chain(monomer=MONOMER,length=2,min_energy=False)
+        monomer = build_chain(monomer=MONOMER,length=1,min_energy=True)
+        dimer = build_chain(monomer=MONOMER,length=2,min_energy=True)
+        mb_mol = mb.Compound()
+        mb_mol.add([monomer,dimer])
+        monomer.translate([1,1,1])
+        dimer.translate([-1,-1,-1])
+    else:
+        mb_mol = MONOMER
+    rdkit_mol = mb_mol.to_rdkit()
+    #aromatic_indices =  get_aromatic_ids(mb_mol)
+    #fix_rdkit_aromaticity(rdkit_mol,aromatic_indices)
+    from openff.toolkit.topology import Molecule
+    comp = Molecule.from_rdkit(rdkit_mol,allow_undefined_stereo=True,hydrogens_are_explicit=True)
     bonds = [b for b in comp.bonds]
     for i in range(len(bonds)):
         bonds[i].bond_order = 1
     b= BondWalker(comp)
     molecule = b.fill_in_bonds()
-
-    #run espaloma code:
     molecule_graph = esp.Graph(molecule)
     espaloma_model = esp.get_model("latest")
     espaloma_model(molecule_graph.heterograph)
-    openmm_system = esp.graphs.deploy.openmm_system_from_graph(molecule_graph)
-    
+    openmm_system = esp.graphs.deploy.openmm_system_from_graph(molecule_graph,charge_method="nn")
     
     # Store the results for each in something more accessible
     pair_forces = openmm_system.getForces()[0]
@@ -61,14 +78,15 @@ def espaloma(FRAGMENT,XML_FILEPATH,TYPED_FILEPATH):
     bond_forces = openmm_system.getForces()[3]
     torsion_forces = openmm_system.getForces()[1]
     
-    
     # get a parmed structure from openmm 
     topology = molecule.to_topology()
     openmm_topology = topology.to_openmm()
     
     structure = pmd.openmm.load_topology(topology=openmm_topology, system=openmm_system)
     structure.bonds.sort(key=lambda x: x.atom1.idx)
-
+    
+    
+    
     for i in range(len(molecule.atoms)):
         if molecule.atoms[i].atomic_number == 6:
             molecule.atoms[i].name = 'C'
@@ -133,9 +151,9 @@ def espaloma(FRAGMENT,XML_FILEPATH,TYPED_FILEPATH):
         k = angle_parms[4]/angle_parms[4].unit
         t0 = angle_parms[3]/angle_parms[3].unit  
         angle_dict[type_map[angle_parms[0]],type_map[angle_parms[1]],type_map[angle_parms[2]]] = {'k':k,'t0':t0}
-
-
-
+    
+    
+    
     dihedral_types = []
     dihedral_dict = {}
     
@@ -166,32 +184,19 @@ def espaloma(FRAGMENT,XML_FILEPATH,TYPED_FILEPATH):
         epsilon = nonbonded_parms[2]/nonbonded_parms[2].unit
         nonbonded_types.append((charge,sigma,epsilon))
         nonbonded_dict[(type_map[i])]={'charge':charge,'sigma':sigma,'epsilon':epsilon}
-        
-    molecule.to_file('molecule.mol',file_format='mol')
-    os.system('obabel molecule.mol -O intermediate.mol2')
-    os.system('rm molecule.mol')
     
-    test = mb.load('intermediate.mol2')
-
     for index in type_map:
-       #print(index, type_map[index],comp_rename[index].name)
-        test[index].name = type_map[index]
-    
-    os.system('rm intermediate.mol2')
-    
-    t1 = test.children[0]
-    t2 = test.children[1]
-    t3 = test.children[2]
-    t4 = test.children[3]
-    
-    test.remove(objs_to_remove=t2)
-    test.remove(objs_to_remove=t4)
-    
-    test.energy_minimize()
+        #print(index, type_map[index],mb_mol[index].name)
+        mb_mol[index].name = type_map[index]
+
+
+    if DIMER == True and mb_mol.children[1].n_particles > mb_mol.children[0].n_particles:
+        dim = mb_mol.children[1]
+        mb_mol.remove(objs_to_remove=dim)
     
     mbuild_to_foyer_xml(
         file_name=XML_FILEPATH,
-        compound=test,
+        compound=mb_mol,
         bond_params=bond_dict,
         angle_params=angle_dict,
         dihedral_params=dihedral_dict,
@@ -203,9 +208,17 @@ def espaloma(FRAGMENT,XML_FILEPATH,TYPED_FILEPATH):
         coulomb14scale=1.0,
         lj14scale=1.0)
     
-    test.save(TYPED_FILEPATH,overwrite=True)
-    
-    return test 
+    mb_mol.save(TYPED_FILEPATH,overwrite=True)
+
+    if os.path.exists(TYPED_FILEPATH):
+        print('Typed mol2 file created.')
+    else: 
+        print('Failed to create typed mol2')
+    if os.path.exists(XML_FILEPATH):
+        print('xml file created.')
+    else: 
+        print('Failed to create xml file')
+
 
 
 def build_polymer(monomer, length,bond_indices, separation,replace,orientations,min_energy):
