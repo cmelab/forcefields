@@ -24,14 +24,17 @@ pip install notebook
 
 # Example 
 
+```
 from functions import MonToSmiles
 from functions.MonToSmiles import mon_to_smiles
+```
 
 #you can either import a preexisting monomer class:
+```
 from monclasses.py import P3HT
-
+```
 #or you can build the monomer class:
-
+```
 class P3HT(mb.Compound):
     def __init__(self):
         super(P3HT,self).__init__()
@@ -40,16 +43,17 @@ class P3HT(mb.Compound):
         self.orientations = [[0,0,1],[0,0,-1]]
         self.separation = 0.14
         self.replace = True
-
+```
 #The monomer class must include the atomic indices where the polymerizing bonds will be formed as well as the orientations of the #bonds, the bond separation, and whether you are replacing the atoms where the bond will be formed or not. 
 
 smiles = mon_to_smiles(fragment=P3HT())[1]   #this line must be run before importing the espaloma function. 
 
 #The mon_to_smiles function returns both the mbuild compound including both the monomer and dimer as well as the smiles string of the monomer and dimer 
-
+```
 from functions import EspalomaFxn
 from functions.EspalomaFxn import espaloma
 
 espaloma(SMILES=smiles,  #from mon_to_smiles function
         XML_FILEPATH='INSERT DESIRED XML FILEPATH',
         TYPED_FILEPATH='INSERT DESIRED MOL2 FILEPATH')
+```
