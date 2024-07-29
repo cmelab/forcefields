@@ -2,8 +2,6 @@ name: ff_generation
 channels:
   - conda-forge
   - pip
-  - defaults
-platform = osx-64
 dependencies:
   - espaloma = 0.3.2
   - mbuild
@@ -14,6 +12,3 @@ dependencies:
   - pip
   - pip:
       - notebook
-variables:
-  CONDA_SUBDIR: osx-64
-prefix: /Users/madilyn/miniconda3/envs/ff_generation
